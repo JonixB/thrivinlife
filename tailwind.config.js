@@ -13,6 +13,9 @@ module.exports = {
       },
       screens: {
         'mobile': '767px',
+      },
+      fontFamily: {
+        'roboto': ['Roboto', 'sans-serif']
       }
     },
   },
