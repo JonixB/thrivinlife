@@ -10,6 +10,9 @@ module.exports = {
       },
       borderColor: {
         'f5f5f5': '#f5f5f5',
+      },
+      screens: {
+        'mobile': '767px',
       }
     },
   },
