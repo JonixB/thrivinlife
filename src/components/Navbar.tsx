@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa'; 
-import { MdFitnessCenter } from 'react-icons/md'; 
+import { MdFitnessCenter } from 'react-icons/md';
+import avatar from '../assets/images/avatar.jpg';
 
 interface Props {}
 
@@ -11,7 +12,7 @@ const Navbar: React.FC<Props> = () => {
 
         {/* Logo */}
         <div className="flex items-center">
-          <span className="text-xl font-bold">Logo</span>
+          <span className="text-xl font-bold mobile:text-sm">Logo</span>
         </div>
 
         {/* Icons */}
@@ -30,9 +31,9 @@ const Navbar: React.FC<Props> = () => {
         {/* Avatar */}
         <div className="flex items-center relative">
           <button aria-label="User Settings" className="focus:outline-none">
-            <img src="path_to_avatar.jpg" alt="User Avatar" className="w-8 h-8 rounded-full border-2 border-f5f5f5"/>
+            <img src={avatar} alt="User Avatar" className="w-8 h-8 rounded-full border-2 border-f5f5f5"/>
           </button>
-          {/* Dropdown Menu (Example) */}
+          
           <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black">
             <a href="/settings" className="block px-4 py-2">Settings</a>
             <a href="/logout" className="block px-4 py-2">Logout</a>
