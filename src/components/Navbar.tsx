@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaTasks, FaWallet } from 'react-icons/fa'; 
+import { MdFitnessCenter } from 'react-icons/md'; 
 
 interface Props {}
 
@@ -15,13 +17,13 @@ const Navbar: React.FC<Props> = () => {
         {/* Icons */}
         <div className="flex space-x-4">
           <button aria-label="Daily Tasks" className="focus:outline-none">
-            <i className="fas fa-tasks">TEST</i>
+            <FaTasks />
           </button>
           <button aria-label="Expenses Tracking" className="focus:outline-none">
-            <i className="fas fa-wallet"></i>
+            <FaWallet />
           </button>
           <button aria-label="Fitness Tracking" className="focus:outline-none">
-            <i className="fas fa-running"></i>
+            <MdFitnessCenter />
           </button>
         </div>
 
