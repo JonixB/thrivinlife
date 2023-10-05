@@ -15,7 +15,7 @@ interface TaskCardProps {
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, onTaskToggle }) => {
   return (
     <div className="max-w-xs mx-auto bg-gradient-to-r from-white to-bg-3498db shadow-md rounded-lg p-4 mb-4">
-      <h2 className="font-bold text-xl text-white mb-3">{date}</h2>
+      <h2 className="font-bold text-xl text-black mb-3">{date}</h2>
       <ul>
         {tasks.map((task) => (
           <li key={task.id} className="flex justify-between items-center mb-2 bg-white rounded p-2 hover:shadow-md transition-shadow">
