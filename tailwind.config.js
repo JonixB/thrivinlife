@@ -16,7 +16,15 @@ module.exports = {
       },
       fontFamily: {
         'roboto': ['Roboto', 'sans-serif']
-      }
+      },
+      textDecoration: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    },
+    variants: {
+      extend: {
+        backgroundColor: ['checked'],
+        borderColor: ['checked'],
+        textDecoration: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+      },
     },
   },
   plugins: [],
