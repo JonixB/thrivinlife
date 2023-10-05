@@ -29,7 +29,7 @@ const Navbar: React.FC<Props> = () => {
         </div>
 
         {/* Icons for larger screens */}
-        <div className="hidden lg:flex space-x-4">
+        <div className="hidden md:flex space-x-4">
           <button aria-label="Daily Tasks" className="focus:outline-none">
             <FaTasks />
           </button>
@@ -42,7 +42,7 @@ const Navbar: React.FC<Props> = () => {
         </div>
 
         {/* Icons dropdown for small screens */}
-        <div className="relative lg:hidden">
+        <div className="relative md:hidden">
           <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
             <MdMenu />
           </button>
