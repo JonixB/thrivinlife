@@ -49,7 +49,7 @@ const Navbar: React.FC<Props> = () => {
             <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
               <MdMenu />
             </button>
-            <div className={`absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
+            <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
               <button aria-label="Daily Tasks" className="block w-full text-left px-4 py-2 focus:outline-none">
                 <FaTasks />
               </button>
