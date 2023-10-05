@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa';
-import { MdFitnessCenter, MdMenu } from 'react-icons/md'; 
+import { MdFitnessCenter, MdMenu } from 'react-icons/md';
 import avatar from '../assets/images/avatar.jpg';
 
 interface Props { }
@@ -41,27 +41,27 @@ const Navbar: React.FC<Props> = () => {
           </button>
         </div>
 
-        {/* Icons dropdown for small screens */}
-        <div className="relative md:hidden">
-          <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
-            <MdMenu />
-          </button>
-          <div className={`absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
-            <button aria-label="Daily Tasks" className="block w-full text-left px-4 py-2 focus:outline-none">
-              <FaTasks />
-            </button>
-            <button aria-label="Expenses Tracking" className="block w-full text-left px-4 py-2 focus:outline-none">
-              <FaWallet />
-            </button>
-            <button aria-label="Fitness Tracking" className="block w-full text-left px-4 py-2 focus:outline-none">
-              <MdFitnessCenter />
-            </button>
-          </div>
-        </div>
-
-
         {/* Avatar dropdown */}
-        <div className="flex items-center relative ml-4">
+        <div className="flex items-center relative">
+
+          {/* Icons dropdown for small screens */}
+          <div className="relative md:hidden mr-4">
+            <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
+              <MdMenu />
+            </button>
+            <div className={`absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
+              <button aria-label="Daily Tasks" className="block w-full text-left px-4 py-2 focus:outline-none">
+                <FaTasks />
+              </button>
+              <button aria-label="Expenses Tracking" className="block w-full text-left px-4 py-2 focus:outline-none">
+                <FaWallet />
+              </button>
+              <button aria-label="Fitness Tracking" className="block w-full text-left px-4 py-2 focus:outline-none">
+                <MdFitnessCenter />
+              </button>
+            </div>
+          </div>
+
           <button aria-label="User Settings" className="focus:outline-none" onClick={() => toggleMenu('avatar')}>
             <img src={avatar} alt="User Avatar" className="w-8 h-8 rounded-full border-2 border-f5f5f5" />
           </button>
@@ -69,8 +69,8 @@ const Navbar: React.FC<Props> = () => {
             <a href="/settings" className="block px-4 py-2">Settings</a>
             <a href="/logout" className="block px-4 py-2">Logout</a>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   );
