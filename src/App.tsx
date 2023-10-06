@@ -19,21 +19,12 @@ function App() {
     // ... add more tasks
   ]);
 
-  const toggleTask = (taskId: string) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, completed: !task.completed }
-          : task
-      )
-    );
-  };
   return (
     <div className="App">
       <div className="mx-auto max-w-screen-xl">
         <Navbar />
         <div className="bg-gray-100 flex-grow p-4 flex flex-col justify-center">
-          <TaskBody /> {/* This is the component you want to add */}
+          <TaskBody /> 
         </div>
         <Footer />
       </div>
