@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TaskCard from './components/TaskCard';
 import './App.css';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -35,6 +36,7 @@ function App() {
           <TaskCard date="October 5, 2023" tasks={tasks} onTaskToggle={toggleTask} />
           {/* You can add more TaskCard components for other days */}
         </div>
+        <Footer />
       </div>
     </div>
   );
