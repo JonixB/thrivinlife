@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TaskCard from './components/TaskCard';
+import TaskBody from './components/TaskBody';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -32,9 +32,8 @@ function App() {
     <div className="App">
       <div className="mx-auto max-w-screen-xl">
         <Navbar />
-        <div className="bg-gray-100 min-h-screen p-4">
-          <TaskCard date="October 5, 2023" tasks={tasks} onTaskToggle={toggleTask} />
-          {/* You can add more TaskCard components for other days */}
+        <div className="bg-gray-100 flex-grow p-4 flex flex-col justify-center">
+          <TaskBody /> {/* This is the component you want to add */}
         </div>
         <Footer />
       </div>
