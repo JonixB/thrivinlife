@@ -14,9 +14,25 @@ const TasksBody: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasksForDate = (date: Date) => {
-    const fetchedTasks: Task[] = [
-      // ... tasks for the selected date
-    ];
+    const dateStr = date.toISOString().split('T')[0]; // Extracts YYYY-MM-DD format
+    let fetchedTasks: Task[] = [];
+    if (dateStr === '2023-10-01') {
+      fetchedTasks = [
+        {
+          id: '1',
+          name: 'Task for October 1st',
+          completed: false,
+        },
+      ];
+    } else if (dateStr === '2023-10-02') {
+      fetchedTasks = [
+        {
+          id: '2',
+          name: 'Task for October 2nd',
+          completed: true,
+        },
+      ];
+    }
     setTasks(fetchedTasks);
   };
 
