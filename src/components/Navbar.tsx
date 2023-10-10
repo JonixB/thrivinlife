@@ -25,7 +25,7 @@ const Navbar: React.FC<Props> = () => {
 
         {/* Logo */}
         <div className="flex items-center">
-          <span className="text-xl font-bold lg:text-sm font-roboto">ThrivinLife</span>
+          <span className="text-xl font-bold font-roboto">ThrivinLife</span>
         </div>
 
         {/* Icons for larger screens */}
