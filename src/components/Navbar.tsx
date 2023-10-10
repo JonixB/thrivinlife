@@ -20,7 +20,7 @@ const Navbar: React.FC<Props> = () => {
   };
 
   return (
-    <div className="bg-3498db p-4 text-white fixed top-0 left-0 w-full z-10">
+    <div className="bg-3498db p-4 text-white">
       <div className="flex justify-between items-center relative">
 
         {/* Logo */}
