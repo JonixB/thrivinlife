@@ -6,14 +6,12 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <div className="mx-auto max-w-screen-xl">
+    <div className="App h-screen flex flex-col max-w-screen-xl mx-auto">
         <Navbar />
-        <div className="bg-gray-100 flex-grow p-4 flex flex-col justify-center">
+        <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
           <TaskBody /> 
         </div>
         <Footer />
-      </div>
     </div>
   );
 }
