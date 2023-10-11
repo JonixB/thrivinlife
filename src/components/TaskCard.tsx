@@ -12,9 +12,10 @@ interface TaskCardProps {
   tasks: Task[];
   userAvatar?: string;
   onTaskToggle?: (taskId: string) => void;
+  onAddTask?: () => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
   return (
     <div className="flex justify-between items-center max-w-xs mx-auto mb-4">
       {/* User Avatar Section */}
@@ -30,7 +31,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       <div className="flex-grow bg-gradient-to-r from-white to-bg-3498db shadow-md rounded-lg p-4">
         <h2 className="font-bold text-xl text-black mb-3">{date}</h2>
         <ul>
-          {tasks.map((task) => (
+          {tasks.length > 0 ? tasks.map((task) => (
             <li key={task.id} className="flex justify-between items-center mb-2 bg-white rounded p-2 hover:shadow-md transition-shadow">
               <span className={`text-gray-700 ${task.completed ? 'line-through' : ''}`}>
                 {task.name}
@@ -45,8 +46,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
                 <div className={`w-5 h-5 bg-border-f5f5f5 border-2 border-gray-300 rounded ${task.completed ? 'bg-3498db' : ''}`}></div>
               </label>
             </li>
-          ))}
+          )) : (
+            <div className="text-center py-4">
+              <p className="mb-4">No tasks for this date.</p>
+            </div>
+          )}
         </ul>
+        <div className="mt-4 text-center">
+          <button onClick={onAddTask} className="bg-3498db text-white px-4 py-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
+            Add Task
+          </button>
+        </div>
       </div>
     </div>
   );
