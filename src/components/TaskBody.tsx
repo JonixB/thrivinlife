@@ -75,7 +75,6 @@ const TasksBody: React.FC = () => {
           onChange={handleDateChange}
           value={selectedDate}
         />
-        {tasks.length === 0 && <p>No tasks for this date.</p>}
       </div>
   );
 }
