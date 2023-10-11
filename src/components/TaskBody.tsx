@@ -9,6 +9,8 @@ interface Task {
   completed: boolean;
 }
 
+const userAvatarURL = "URL_TO_USER_AVATAR"; 
+
 const TasksBody: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -62,21 +64,20 @@ const TasksBody: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 py-8">
-      <Calendar
-        onChange={handleDateChange}
-        value={selectedDate}
-      />
-      {tasks.length > 0 && (
+      <div className="flex flex-col items-center space-y-4 py-8">
         <TaskCard
-          date={selectedDate.toDateString()}
-          tasks={tasks}
-          onTaskToggle={handleTaskToggle}
+            date={selectedDate.toDateString()}
+            tasks={tasks}
+            onTaskToggle={handleTaskToggle}
+            userAvatar={userAvatarURL}
         />
-      )}
-      {tasks.length === 0 && <p>No tasks for this date.</p>}
-    </div>
+        <Calendar
+          onChange={handleDateChange}
+          value={selectedDate}
+        />
+        {tasks.length === 0 && <p>No tasks for this date.</p>}
+      </div>
   );
-};
+}
 
 export default TasksBody;
