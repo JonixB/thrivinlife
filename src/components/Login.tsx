@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
 
 const SUPABASE_URL = process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!;
 const SUPABASE_ANON_KEY = process.env.REACT_APP_THRIVIN_LIFE_ANON_KEY!;
@@ -16,6 +17,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const handleSignUp = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
       email: username,
@@ -26,7 +29,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      console.log(data);
+      navigate('/dashboard');
     }
   }
 
@@ -40,7 +43,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      console.log(data);
+      navigate('/dashboard');
     }
   }
   return (
