@@ -15,13 +15,13 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-  
+
   const handleSignUp = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
       email: username,
       password: password,
     });
-    
+
     if (error) {
       console.error(error.message);
     }
@@ -35,7 +35,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       email: username,
       password: password,
     });
-    
+
     if (error) {
       console.error(error.message);
     }
@@ -76,7 +76,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
 
         <div className="mb-4">
           <button
-            onClick={() => isSignUp ? onSignUp?.(username, password) : onLogin?.(username, password)}
+            onClick={() => isSignUp ? handleSignUp(username, password) : handleSignIn(username, password)}
             className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none"
           >
             {isSignUp ? 'Sign Up' : 'Sign In'}
