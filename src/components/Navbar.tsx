@@ -26,19 +26,19 @@ const Navbar: React.FC<Props> = () => {
         {/* Logo */}
         <div className="flex items-center">
           <img src="/ThrivinLife-Tab-Logo.png" className="w-16 h-16" alt="ThrivinLife" />
-          <h1>ThrivinLife</h1>
+          <h1 className="font-roboto text-2xl ml-1 self-center">ThrivinLife</h1>
         </div>
 
         {/* Icons for larger screens */}
-        <div className="hidden md:flex space-x-4">
-          <button aria-label="Daily Tasks" className="focus:outline-none">
-            <FaTasks />
+        <div className="hidden md:flex space-x-4 items-center">
+          <button aria-label="Daily Tasks" className="focus:outline-none w-10 h-10 p-2">
+            <FaTasks className="w-full h-full" />
           </button>
-          <button aria-label="Expenses Tracking" className="focus:outline-none">
-            <FaWallet />
+          <button aria-label="Expenses Tracking" className="focus:outline-none w-10 h-10 p-2">
+            <FaWallet className="w-full h-full" />
           </button>
-          <button aria-label="Fitness Tracking" className="focus:outline-none">
-            <MdFitnessCenter />
+          <button aria-label="Fitness Tracking" className="focus:outline-none w-10 h-10 p-2">
+            <MdFitnessCenter className="w-full h-full" />
           </button>
         </div>
 
@@ -63,8 +63,8 @@ const Navbar: React.FC<Props> = () => {
             </div>
           </div>
 
-          <button aria-label="User Settings" className="focus:outline-none" onClick={() => toggleMenu('avatar')}>
-            <img src={avatar} alt="User Avatar" className="w-8 h-8 rounded-full border-2 border-f5f5f5" />
+          <button aria-label="User Settings" className="focus:outline-none w-10 h-10">
+            <img src={avatar} alt="User Avatar" className="w-full h-full rounded-full border-2 border-f5f5f5" />
           </button>
           <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${menuOpen ? 'block' : 'hidden'}`}>
             <a href="/settings" className="block px-4 py-2">Settings</a>
