@@ -63,7 +63,7 @@ const Navbar: React.FC<Props> = () => {
             </div>
           </div>
 
-          <button aria-label="User Settings" className="focus:outline-none w-10 h-10">
+          <button aria-label="User Settings" className="focus:outline-none w-10 h-10" onClick={() => toggleMenu('avatar')}>
             <img src={avatar} alt="User Avatar" className="w-full h-full rounded-full border-2 border-f5f5f5" />
           </button>
           <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${menuOpen ? 'block' : 'hidden'}`}>
