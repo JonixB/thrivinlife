@@ -48,7 +48,7 @@ const Navbar: React.FC<Props> = () => {
           {/* Icons dropdown for small screens */}
           <div className="relative md:hidden mr-4">
             <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
-              <MdMenu />
+            <MdMenu className="w-10 h-10"/>
             </button>
             <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
               <button aria-label="Daily Tasks" className="block w-full text-left px-4 py-2 focus:outline-none">
