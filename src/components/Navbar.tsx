@@ -25,7 +25,8 @@ const Navbar: React.FC<Props> = () => {
 
         {/* Logo */}
         <div className="flex items-center">
-          <span className="text-xl font-bold font-roboto">ThrivinLife</span>
+          <img src="/ThrivinLife-Tab-Logo.png" className="w-16 h-16" alt="ThrivinLife" />
+          <h1>ThrivinLife</h1>
         </div>
 
         {/* Icons for larger screens */}
