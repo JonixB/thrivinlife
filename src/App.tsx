@@ -11,15 +11,15 @@ function App() {
   const [user, setUser] = useState<Session | null>(null);
 
   useEffect(() => {
-    
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getSession();
-      if (data !== null) {
-        setUser(data as unknown as Session); 
+      console.log('data', data.session);
+      console.log('error', error);
+      if (data.session !== null) {
+        setUser(data.session as Session); 
       }
     };
     fetchUser();
-    console.log(user);
   }, []);
 
   return (
@@ -33,7 +33,7 @@ function App() {
             <Route path="*" element={<Login />} />
           </Routes>
         </div>
-        {user && <Footer />}
+        <Footer />
       </div>
     </Router>
   );
