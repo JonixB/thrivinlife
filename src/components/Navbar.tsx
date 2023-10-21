@@ -78,7 +78,7 @@ const Navbar: React.FC<Props> = () => {
           </button>
           <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${menuOpen ? 'block' : 'hidden'}`}>
             <a href="/settings" className="block px-4 py-2">Settings</a>
-            <a href="/logout" className="block px-4 py-2">Logout</a>
+            <button onClick={handleLogout} className="block w-full text-left px-4 py-2 focus:outline-none">Logout</button>
           </div>
 
         </div>
