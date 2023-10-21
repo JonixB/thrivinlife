@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter, MdMenu } from 'react-icons/md';
+import { supabase } from '../lib/helper/supabase';
 import avatar from '../assets/images/avatar.jpg';
 
 interface Props { }
@@ -16,6 +17,15 @@ const Navbar: React.FC<Props> = () => {
     } else if (menuType === 'icons') {
       setIconMenuOpen(!iconMenuOpen);
       setMenuOpen(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error logging out:', error);
+    } else {
+
     }
   };
 
