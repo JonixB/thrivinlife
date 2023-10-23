@@ -25,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      navigate('/dashboard');
+      navigate('/tasks');
     }
   }
 
@@ -39,7 +39,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      navigate('/dashboard');
+      navigate('/tasks');
     }
   }
   return (
