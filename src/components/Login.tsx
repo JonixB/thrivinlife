@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/helper/supabase';
 
 
@@ -13,6 +13,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const handleSignUp = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
       email: username,
@@ -23,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      <Navigate to="/tasks" />
+      navigate('/tasks');
     }
   }
 
@@ -37,7 +39,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
       console.error(error.message);
     }
     if (data) {
-      <Navigate to="/tasks" />
+      navigate('/tasks');
     }
   }
   return (
