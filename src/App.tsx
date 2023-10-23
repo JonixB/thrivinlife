@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import TaskBody from './components/TaskBody';
@@ -13,10 +13,8 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getSession();
-      console.log('data', data.session);
-      console.log('error', error);
       if (data.session !== null) {
-        setUser(data.session as Session); 
+        setUser(data.session as Session);
       }
     };
     fetchUser();
@@ -28,9 +26,9 @@ function App() {
         {user && <Navbar />}
         <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/tasks" element={<TaskBody />} />
-            <Route path="*" element={<Login />} />
+            <Route path="/login" element={user ? <Navigate to="/tasks" /> : <Login />} />
+            <Route path="/tasks" element={user ? <TaskBody /> : <Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to={user ? "/tasks" : "/login"} />} />
           </Routes>
         </div>
         <Footer />
