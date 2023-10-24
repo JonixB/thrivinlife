@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import default styles.
-import TaskCard from './TaskCard'; // Ensure this is the correct path
+import 'react-calendar/dist/Calendar.css'; 
+import TaskCard from './TaskCard'; 
 
 interface Task {
   id: string;
@@ -16,7 +16,7 @@ const TasksBody: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasksForDate = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0]; // Extracts YYYY-MM-DD format
+    const dateStr = date.toISOString().split('T')[0]; 
     let fetchedTasks: Task[] = [];
     if (dateStr === '2023-10-01') {
       fetchedTasks = [
