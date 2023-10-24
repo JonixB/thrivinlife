@@ -3,12 +3,14 @@ import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter, MdMenu } from 'react-icons/md';
 import { supabase } from '../lib/helper/supabase';
 import avatar from '../assets/images/avatar.jpg';
+import { toast } from 'react-toastify';
 
 interface Props { }
 
 const Navbar: React.FC<Props> = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [iconMenuOpen, setIconMenuOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const toggleMenu = (menuType: 'avatar' | 'icons') => {
     if (menuType === 'avatar') {
@@ -21,11 +23,13 @@ const Navbar: React.FC<Props> = () => {
   };
 
   const handleLogout = async () => {
+    setLoading(true);
     const { error } = await supabase.auth.signOut();
+    setLoading(false);
     if (error) {
       console.error('Error logging out:', error);
     } else {
-
+      toast.success('Successfully logged out!');
     }
   };
 
@@ -58,7 +62,7 @@ const Navbar: React.FC<Props> = () => {
           {/* Icons dropdown for small screens */}
           <div className="relative md:hidden mr-4">
             <button aria-label="Open Icon Menu" className="focus:outline-none" onClick={() => toggleMenu('icons')}>
-            <MdMenu className="w-10 h-10"/>
+              <MdMenu className="w-10 h-10" />
             </button>
             <div className={`absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-black ${iconMenuOpen ? 'block' : 'hidden'}`}>
               <button aria-label="Daily Tasks" className="block w-full text-left px-4 py-2 focus:outline-none">
@@ -83,6 +87,11 @@ const Navbar: React.FC<Props> = () => {
 
         </div>
       </div>
+      {loading && (
+        <div className="loading-indicator">
+          Loading...
+        </div>
+      )}
     </div>
   );
 }
