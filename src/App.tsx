@@ -6,6 +6,7 @@ import TaskBody from './components/TaskBody';
 import Login from './components/Login';
 import { supabase } from './lib/helper/supabase';
 import { Session } from '@supabase/supabase-js';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
+        <ToastContainer position="top-right" />
       </div>
     </Router>
   );
