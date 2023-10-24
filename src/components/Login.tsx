@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 interface LoginProps {
