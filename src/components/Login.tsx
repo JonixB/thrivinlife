@@ -3,25 +3,17 @@ import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 
 
-interface LoginProps {
-  onLogin?: (username: string, password: string) => void;
-  onSignUp?: (username: string, password: string) => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
 
   const handleSignUp = async (username: string, password: string) => {
-    setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email: username,
       password: password,
     });
-    setLoading(false);
 
     if (error) {
       console.error(error.message);
@@ -32,12 +24,10 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   }
 
   const handleSignIn = async (username: string, password: string) => {
-    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: username,
       password: password,
     });
-    setLoading(false);
 
     if (error) {
       console.error(error.message);
@@ -101,12 +91,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
           </div>
         </div>
       </div>
-
-      {loading && (
-        <div className="loading-indicator">
-          Loading...
-        </div>
-      )}
     </div>
   );
 }
