@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/helper/supabase';
+import { ToastContainer, toast } from 'react-toastify';  // Import the required components from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 interface LoginProps {
@@ -12,6 +14,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 

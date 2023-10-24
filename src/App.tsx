@@ -7,6 +7,7 @@ import Login from './components/Login';
 import { supabase } from './lib/helper/supabase';
 import { Session } from '@supabase/supabase-js';
 
+
 function App() {
   const [user, setUser] = useState<Session | null>(null);
 
