@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/helper/supabase';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,7 +15,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const navigate = useNavigate();
 
   const handleSignUp = async (username: string, password: string) => {
     setLoading(true);
@@ -31,7 +29,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
     }
     if (data) {
       toast.success('Successfully signed up!');
-      navigate('/tasks');
     }
   }
 
@@ -48,7 +45,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
     }
     if (data) {
       toast.success('Successfully logged in!');
-      navigate('/tasks');
     }
   }
 
