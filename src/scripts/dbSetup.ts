@@ -1,4 +1,4 @@
-import { supabase } from '../src/lib/helper/supabase';
+import { supabase } from '../lib/helper/supabase';
 
 const sqlScript = `
 -- Drop tables if they exist
