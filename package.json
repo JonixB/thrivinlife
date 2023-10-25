@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "db:reset": "ts-node scripts/dbSetup.ts"
+    "db:seed": "supabase db seed"
   },
   "eslintConfig": {
     "extends": [
