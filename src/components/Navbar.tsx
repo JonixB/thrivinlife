@@ -9,8 +9,7 @@ interface Props { }
 
 const Navbar: React.FC<Props> = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [iconMenuOpen, setIconMenuOpen] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [iconMenuOpen, setIconMenuOpen] = useState(false);;
 
   const toggleMenu = (menuType: 'avatar' | 'icons') => {
     if (menuType === 'avatar') {
@@ -23,9 +22,7 @@ const Navbar: React.FC<Props> = () => {
   };
 
   const handleLogout = async () => {
-    setLoading(true);
     const { error } = await supabase.auth.signOut();
-    setLoading(false);
     if (error) {
       console.error('Error logging out:', error);
     } else {
@@ -87,11 +84,6 @@ const Navbar: React.FC<Props> = () => {
 
         </div>
       </div>
-      {loading && (
-        <div className="loading-indicator">
-          Loading...
-        </div>
-      )}
     </div>
   );
 }
