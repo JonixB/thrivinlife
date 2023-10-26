@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; 
 import TaskCard from './TaskCard'; 
+import avatar from '../assets/images/avatar.jpg';
 
 interface Task {
   id: string;
@@ -12,8 +13,6 @@ interface Task {
 interface Props { 
   avatarUrl: string | null;
 }
-
-const userAvatarURL = "URL_TO_USER_AVATAR"; 
 
 const TasksBody: React.FC<Props> = ({ avatarUrl }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -73,7 +72,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl }) => {
             date={selectedDate.toDateString()}
             tasks={tasks}
             onTaskToggle={handleTaskToggle}
-            userAvatar={userAvatarURL}
+            userAvatar={avatarUrl ? avatarUrl : avatar}
         />
         <Calendar
           onChange={handleDateChange}

@@ -21,7 +21,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       {/* User Avatar Section */}
       <div className="flex-shrink-0 w-20 h-20">
         {userAvatar ? (
-          <img src={avatar} alt="User Avatar" className="w-full h-full rounded-full border-2 border-f5f5f5" />
+          <img src={userAvatar} alt="User Avatar" className="w-full h-full rounded-full border-2 border-f5f5f5" />
         ) : (
           <img src={avatar} className="w-full h-full bg-gray-300 rounded-full" />
         )}
