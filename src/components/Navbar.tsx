@@ -5,9 +5,11 @@ import { supabase } from '../lib/helper/supabase';
 import avatar from '../assets/images/avatar.jpg';
 import { toast } from 'react-toastify';
 
-interface Props { }
+interface Props { 
+  avatarUrl: string | null;
+}
 
-const Navbar: React.FC<Props> = () => {
+const Navbar: React.FC<Props> = ({ avatarUrl }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [iconMenuOpen, setIconMenuOpen] = useState(false);;
 

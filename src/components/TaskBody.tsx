@@ -9,9 +9,13 @@ interface Task {
   completed: boolean;
 }
 
+interface Props { 
+  avatarUrl: string | null;
+}
+
 const userAvatarURL = "URL_TO_USER_AVATAR"; 
 
-const TasksBody: React.FC = () => {
+const TasksBody: React.FC<Props> = ({ avatarUrl }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
 
