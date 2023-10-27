@@ -12,7 +12,7 @@ CREATE TABLE tasks (
   id serial PRIMARY KEY,
   user_id uuid REFERENCES auth.users(id),
   task_title VARCHAR(255),
-  taks_description TEXT,
+  task_description TEXT,
   due_date DATE,
   priority VARCHAR(255),
   status VARCHAR(255)
