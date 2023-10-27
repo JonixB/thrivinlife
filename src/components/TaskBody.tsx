@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; 
-import TaskCard from './TaskCard'; 
+import 'react-calendar/dist/Calendar.css';
+import TaskCard from './TaskCard';
 import avatar from '../assets/images/avatar.jpg';
+import { supabase } from '../lib/helper/supabase';
 
 interface Task {
   id: string;
@@ -10,36 +11,31 @@ interface Task {
   completed: boolean;
 }
 
-interface Props { 
+interface Props {
   avatarUrl: string | null;
+  userId: string;
 }
 
-const TasksBody: React.FC<Props> = ({ avatarUrl }) => {
+const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const fetchTasksForDate = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0]; 
-    let fetchedTasks: Task[] = [];
-    if (dateStr === '2023-10-01') {
-      fetchedTasks = [
-        {
-          id: '1',
-          name: 'Task for October 1st',
-          completed: false,
-        },
-      ];
-    } else if (dateStr === '2023-10-02') {
-      fetchedTasks = [
-        {
-          id: '2',
-          name: 'Task for October 2nd',
-          completed: true,
-        },
-      ];
+  const fetchTasksForDate = async (date: Date) => {
+    const dateStr = date.toISOString().split('T')[0];
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('date', dateStr)
+      .eq('user_id', userId);
+    
+    if (error) {
+      console.error('Error fetching tasks:', error);
+      return;
     }
-    setTasks(fetchedTasks);
+    
+    setTasks(data || []);
   };
+
 
   type ValuePiece = Date | null;
   type Value = ValuePiece | ValuePiece[];
@@ -67,18 +63,18 @@ const TasksBody: React.FC<Props> = ({ avatarUrl }) => {
   };
 
   return (
-      <div className="flex flex-col items-center space-y-4 py-8">
-        <TaskCard
-            date={selectedDate.toDateString()}
-            tasks={tasks}
-            onTaskToggle={handleTaskToggle}
-            userAvatar={avatarUrl ? avatarUrl : avatar}
-        />
-        <Calendar
-          onChange={handleDateChange}
-          value={selectedDate}
-        />
-      </div>
+    <div className="flex flex-col items-center space-y-4 py-8">
+      <TaskCard
+        date={selectedDate.toDateString()}
+        tasks={tasks}
+        onTaskToggle={handleTaskToggle}
+        userAvatar={avatarUrl ? avatarUrl : avatar}
+      />
+      <Calendar
+        onChange={handleDateChange}
+        value={selectedDate}
+      />
+    </div>
   );
 }
 
