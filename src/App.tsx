@@ -62,7 +62,7 @@ function App() {
         <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
           <Routes>
             <Route path="/login" element={user ? <Navigate to="/tasks" /> : <Login />} />
-            <Route path="/tasks" element={user ? <TaskBody avatarUrl={avatarUrl} /> : <Navigate to="/login" />} />
+            <Route path="/tasks" element={user ? <TaskBody avatarUrl={avatarUrl} userId={user.user.id} /> : <Navigate to="/login" />} />
             <Route path="*" element={<Navigate to={user ? "/tasks" : "/login"} />} />
           </Routes>
         </div>
