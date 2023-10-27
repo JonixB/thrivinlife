@@ -12,7 +12,7 @@ interface TaskCardProps {
   tasks: Task[];
   userAvatar?: string;
   onTaskToggle?: (taskId: string) => void;
-  onAddTask?: () => void;
+  onAddTask?: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
