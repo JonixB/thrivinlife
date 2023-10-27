@@ -38,16 +38,19 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
   const handleAddTask = async (taskTitle: string, taskDescription: string, priority: string, status: string) => {
     const dueDateStr = selectedDate.toISOString().split('T')[0];
+    const newTask = {
+      user_id: userId,
+      task_title: taskTitle,
+      task_description: taskDescription,
+      due_date: dueDateStr,
+      priority: priority,
+      status: status
+    };
+    console.log('New Task:', newTask); 
+
     const { data, error } = await supabase
       .from('tasks')
-      .insert([{
-        user_id: userId,
-        task_title: taskTitle,
-        task_description: taskDescription,
-        due_date: dueDateStr,
-        priority: priority,
-        status: status
-      }]);
+      .insert(newTask);
 
     if (error) {
       console.error('Error adding task:', error);
@@ -60,6 +63,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       console.error('Unexpected data format:', data);
     }
   };
+
 
   type ValuePiece = Date | null;
   type Value = ValuePiece | ValuePiece[];
