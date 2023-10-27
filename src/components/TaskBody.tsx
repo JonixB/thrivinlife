@@ -6,9 +6,13 @@ import avatar from '../assets/images/avatar.jpg';
 import { supabase } from '../lib/helper/supabase';
 
 interface Task {
-  id: string;
-  name: string;
-  completed: boolean;
+  id: string,
+  user_id: string,
+  task_title: string,
+  task_description: string,
+  due_date: string,
+  priority: string,
+  status: string
 }
 
 interface Props {
@@ -32,7 +36,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       console.error('Error fetching tasks:', error);
       return;
     }
-
+    console.log(data);
     setTasks(data || []);
   };
 
@@ -85,7 +89,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     // Logic to toggle task status
     setTasks(prevTasks =>
       prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
+        task.id === taskId ? { ...task, completed: !task.status } : task
       )
     );
   };

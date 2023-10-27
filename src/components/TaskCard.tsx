@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
 
 interface Task {
-  id: string;
-  name: string;
-  completed: boolean;
+  id: string,
+  user_id: string,
+  task_title: string,
+  task_description: string,
+  due_date: string,
+  priority: string,
+  status: string
 }
 
 interface TaskCardProps {
@@ -38,17 +42,18 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
         <ul>
           {tasks.length > 0 ? tasks.map((task) => (
             <li key={task.id} className="flex justify-between items-center mb-2 bg-white rounded p-2 hover:shadow-md transition-shadow">
-              <span className={`text-gray-700 ${task.completed ? 'line-through' : ''}`}>
-                {task.name}
+              <span className={`text-gray-700`}>
+                {task.task_title} - {task.task_description} - {task.priority} - {task.status}
               </span>
               <label className="cursor-pointer">
                 <input
                   type="checkbox"
                   className="hidden"
-                  checked={task.completed}
+                  // Replace this logic as necessary to match your data structure and requirements
+                  checked={task.status === 'Complete'}
                   onChange={() => onTaskToggle && onTaskToggle(task.id)}
                 />
-                <div className={`w-5 h-5 bg-border-f5f5f5 border-2 border-gray-300 rounded ${task.completed ? 'bg-3498db' : ''}`}></div>
+                <div className={`w-5 h-5 bg-border-f5f5f5 border-2 border-gray-300 rounded ${task.status === 'Complete' ? 'bg-3498db' : ''}`}></div>
               </label>
             </li>
           )) : (
