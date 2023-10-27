@@ -27,15 +27,39 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       .select('*')
       .eq('date', dateStr)
       .eq('user_id', userId);
-    
+
     if (error) {
       console.error('Error fetching tasks:', error);
       return;
     }
-    
+
     setTasks(data || []);
   };
 
+  const handleAddTask = async (taskTitle: string, taskDescription: string, priority: string, status: string) => {
+    const dueDateStr = selectedDate.toISOString().split('T')[0];
+    const { data, error } = await supabase
+      .from('tasks')
+      .insert([{
+        user_id: userId,
+        task_title: taskTitle,
+        task_description: taskDescription,
+        due_date: dueDateStr,
+        priority: priority,
+        status: status
+      }]);
+
+    if (error) {
+      console.error('Error adding task:', error);
+      return;
+    }
+
+    if (data && Array.isArray(data)) {
+      setTasks(prevTasks => [...prevTasks, ...data]);
+    } else {
+      console.error('Unexpected data format:', data);
+    }
+  };
 
   type ValuePiece = Date | null;
   type Value = ValuePiece | ValuePiece[];
