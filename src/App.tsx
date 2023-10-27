@@ -16,7 +16,7 @@ function App() {
   const fetchAvatarUrl = async (userId: string) => {
     if (userId) {
       const { data, error } = await supabase
-        .from('profile')
+        .from('profiles')
         .select('profile_image')
         .eq('user_id', userId)
         .single();
