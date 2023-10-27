@@ -93,6 +93,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         tasks={tasks}
         onTaskToggle={handleTaskToggle}
         userAvatar={avatarUrl ? avatarUrl : avatar}
+        onAddTask={handleAddTask}
       />
       <Calendar
         onChange={handleDateChange}

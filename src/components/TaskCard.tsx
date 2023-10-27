@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
 
 interface Task {
@@ -16,6 +16,11 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [priority, setPriority] = useState('');
+  const [status, setStatus] = useState('');
+
   return (
     <div className="flex justify-between items-center max-w-xs mx-auto mb-4">
       {/* User Avatar Section */}
@@ -53,7 +58,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
           )}
         </ul>
         <div className="mt-4 text-center">
-          <button onClick={onAddTask} className="bg-3498db text-white px-4 py-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
+          <input type="text" placeholder="Task Title" value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)} />
+          <input type="text" placeholder="Task Description" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} />
+          <input type="text" placeholder="Priority" value={priority} onChange={(e) => setPriority(e.target.value)} />
+          <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
+          <button onClick={() => onAddTask && onAddTask(taskTitle, taskDescription, priority, status)} className="bg-3498db text-white px-4 py-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
             Add Task
           </button>
         </div>
