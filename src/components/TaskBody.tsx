@@ -25,7 +25,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     const { data, error } = await supabase
       .from('tasks')
       .select('*')
-      .eq('date', dateStr)
+      .eq('due_date', dateStr)
       .eq('user_id', userId);
 
     if (error) {
