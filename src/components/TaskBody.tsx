@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import TaskCard from './TaskCard';
@@ -23,6 +23,10 @@ interface Props {
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    fetchTasksForDate(selectedDate);
+  }, []);
 
   const fetchTasksForDate = async (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
@@ -50,7 +54,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       priority: priority,
       status: status
     };
-    console.log('New Task:', newTask); 
+    console.log('New Task:', newTask);
 
     const { data, error } = await supabase
       .from('tasks')
