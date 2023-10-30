@@ -7,6 +7,7 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 
   const handleSignUp = async (username: string, password: string) => {
@@ -31,9 +32,12 @@ const Login: React.FC = () => {
 
     if (error) {
       console.error(error.message);
+      setErrorMessage('Incorrect username or password.');
+      return;
     }
     if (data) {
       toast.success('Successfully logged in!');
+      setErrorMessage(null); 
     }
   }
 
@@ -69,6 +73,7 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 border rounded-md"
             />
+            {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
           </div>
           <div className="mb-4">
             <button
