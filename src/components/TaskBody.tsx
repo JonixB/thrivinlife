@@ -39,11 +39,13 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
     if (error) {
       console.error('Error fetching tasks:', error);
+      setNotificationMessage('Failed to fetch tasks.');
       return;
     }
     console.log(data);
     setTasks(data || []);
   };
+
 
   const handleAddTask = async (taskTitle: string, taskDescription: string, priority: string, status: string) => {
     const dueDateStr = selectedDate.toISOString().split('T')[0];
@@ -57,7 +59,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     };
     console.log('New Task:', newTask);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('tasks')
       .insert(newTask);
 
@@ -67,15 +69,9 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       return;
     }
 
-    if (data && Array.isArray(data)) {
-      setTasks(prevTasks => [...prevTasks, ...data]);
-      setNotificationMessage('Task added successfully.');
-    } else {
-      console.error('Unexpected data format:', data);
-      setNotificationMessage('Unexpected error occurred.');
-    }
+    await fetchTasksForDate(selectedDate);
+    setNotificationMessage('Task added successfully.');
   };
-
 
   type ValuePiece = Date | null;
   type Value = ValuePiece | ValuePiece[];
