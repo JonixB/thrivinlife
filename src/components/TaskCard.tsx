@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';  // Import icons from react-icons
 
 interface Task {
   id: string,
@@ -44,18 +44,15 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
           <li key={task.id} className="flex justify-between items-center mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
-            <span className={`text-gray-700 ${task.status === 'Complete' ? 'line-through' : ''}`}>
+            <span className="text-gray-700">
               {task.task_title}
             </span>
-            <label className="cursor-pointer flex items-center">
-              <input
-                type="checkbox"
-                className="hidden"
-                checked={task.status === 'Complete'}
-                onChange={() => onTaskToggle && onTaskToggle(task.id)}
-              />
+            <button
+              onClick={() => onTaskToggle && onTaskToggle(task.id)}
+              className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+            >
               {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
-            </label>
+            </button>
           </li>
         )) : (
           <div className="text-center py-4">

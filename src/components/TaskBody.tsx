@@ -90,14 +90,35 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     }
   };
 
-  const handleTaskToggle = (taskId: string) => {
-    // Logic to toggle task status
+  const handleTaskToggle = async (taskId: string) => {
+    const taskToToggle = tasks.find(task => task.id === taskId);
+    
+    if (!taskToToggle) {
+        console.error('Task not found:', taskId);
+        return;
+    }
+
+    const newStatus = taskToToggle.status === 'Complete' ? 'Incomplete' : 'Complete';
+
+    const { error } = await supabase
+        .from('tasks')
+        .update({ status: newStatus })
+        .eq('id', taskId);
+
+    if (error) {
+        console.error('Error updating task status:', error);
+        toast.error('Failed to update task status.');
+        return;
+    }
+
     setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.status } : task
-      )
+        prevTasks.map(task =>
+            task.id === taskId ? { ...task, status: newStatus } : task
+        )
     );
-  };
+    
+    toast.success('Task status updated successfully.');
+};
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
