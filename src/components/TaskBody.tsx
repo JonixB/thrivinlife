@@ -23,6 +23,7 @@ interface Props {
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTasksForDate(selectedDate);
@@ -62,13 +63,16 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
     if (error) {
       console.error('Error adding task:', error);
+      setNotificationMessage('Failed to add task.');
       return;
     }
 
     if (data && Array.isArray(data)) {
       setTasks(prevTasks => [...prevTasks, ...data]);
+      setNotificationMessage('Task added successfully.');
     } else {
       console.error('Unexpected data format:', data);
+      setNotificationMessage('Unexpected error occurred.');
     }
   };
 
@@ -100,6 +104,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
+      {notificationMessage && <div className="notification">{notificationMessage}</div>}
       <TaskCard
         date={selectedDate.toDateString()}
         tasks={tasks}
