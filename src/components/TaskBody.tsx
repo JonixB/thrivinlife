@@ -4,6 +4,8 @@ import 'react-calendar/dist/Calendar.css';
 import TaskCard from './TaskCard';
 import avatar from '../assets/images/avatar.jpg';
 import { supabase } from '../lib/helper/supabase';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Task {
   id: string,
@@ -23,7 +25,6 @@ interface Props {
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTasksForDate(selectedDate);
@@ -39,7 +40,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
     if (error) {
       console.error('Error fetching tasks:', error);
-      setNotificationMessage('Failed to fetch tasks.');
       return;
     }
     console.log(data);
@@ -65,12 +65,13 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
     if (error) {
       console.error('Error adding task:', error);
-      setNotificationMessage('Failed to add task.');
+      toast.error('Failed to add task.'); 
       return;
     }
 
+    // Re-fetch tasks
     await fetchTasksForDate(selectedDate);
-    setNotificationMessage('Task added successfully.');
+    toast.success('Task added successfully.');
   };
 
   type ValuePiece = Date | null;
@@ -100,7 +101,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
-      {notificationMessage && <div className="notification">{notificationMessage}</div>}
       <TaskCard
         date={selectedDate.toDateString()}
         tasks={tasks}
