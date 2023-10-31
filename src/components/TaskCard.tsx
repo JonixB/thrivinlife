@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
-import { FaCheckCircle, FaTimesCircle, FaStar, FaRegStar } from 'react-icons/fa';  // Import icons from react-icons
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'; 
+import StarRating from './StarRating'; 
 
 interface Task {
   id: string,
@@ -20,19 +21,10 @@ interface TaskCardProps {
   onAddTask?: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
 }
 
-const renderStars = (priority: string) => {
-  const priorityNum = parseInt(priority, 10);
-  const stars = [];
-  for (let i = 0; i < 5; i++) {
-    stars.push(i < priorityNum ? <FaStar key={i} /> : <FaRegStar key={i} />);
-  }
-  return stars;
-};
-
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
-  const [priority, setPriority] = useState('');
+  const [priority, setPriority] = useState('0');
   const [status, setStatus] = useState('');
 
   return (
@@ -61,7 +53,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
             </span>
             <div className="flex justify-between items-center w-full mt-2">
               <div>
-                {renderStars(task.priority)}
+                <StarRating
+                  rating={parseInt(task.priority, 10)}
+                  onRatingChange={() => { }}
+                />
               </div>
               <button
                 onClick={() => onTaskToggle && onTaskToggle(task.id)}
@@ -82,7 +77,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       <div className="border-t pt-4">
         <input type="text" placeholder="Task Title" value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)} className="w-full p-2 mb-2 border rounded" />
         <input type="text" placeholder="Task Description" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} className="w-full p-2 mb-2 border rounded" />
-        <input type="text" placeholder="Priority" value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full p-2 mb-2 border rounded" />
+        <StarRating
+          rating={parseInt(priority, 10)}
+          onRatingChange={(newRating) => setPriority(newRating.toString())}
+        />
         <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full p-2 mb-2 border rounded" />
         <button onClick={() => onAddTask && onAddTask(taskTitle, taskDescription, priority, status)} className="w-full bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
           Add Task
