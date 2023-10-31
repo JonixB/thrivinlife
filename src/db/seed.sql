@@ -14,7 +14,7 @@ CREATE TABLE tasks (
   task_title VARCHAR(255),
   task_description TEXT,
   due_date DATE,
-  priority VARCHAR(255),
+  priority INT2,
   status VARCHAR(255)
 );
 
@@ -25,4 +25,5 @@ VALUES
 
 INSERT INTO tasks (user_id, task_title, task_description, due_date, priority, status)
 VALUES
-    ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Coding', 'Keep coding to enhance my skills', '2023-10-24', 'High', 'Complete');
+    ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Coding', 'Keep coding to enhance my skills', '2023-10-31', 4, 'Complete'),
+    ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Work on project', 'Start doing project features little by little', '2023-10-31', 5, 'Complete');
