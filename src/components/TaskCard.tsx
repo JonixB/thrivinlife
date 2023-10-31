@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
-import { FaCheckCircle, FaTimesCircle, FaTrash } from 'react-icons/fa'; 
-import StarRating from './StarRating'; 
+import { FaCheckCircle, FaTimesCircle, FaTrash } from 'react-icons/fa';
+import StarRating from './StarRating';
 
 interface Task {
   id: string,
@@ -22,7 +22,7 @@ interface TaskCardProps {
   onDeleteTask?: (taskId: string) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('0');
@@ -45,7 +45,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
-          <li key={task.id} className="flex flex-col justify-between items-start mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
+          <li key={task.id} className="relative flex flex-col justify-between items-start mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
             <span className="text-gray-700 font-bold">
               {task.task_title}
             </span>
@@ -58,12 +58,18 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
                   rating={parseInt(task.priority, 10)}
                   onRatingChange={() => { }}
                 />
-              </div>
+              </div>      
               <button
                 onClick={() => onTaskToggle && onTaskToggle(task.id)}
                 className="p-1 rounded-full hover:bg-gray-200 transition-colors"
               >
                 {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
+              </button>
+              <button
+                onClick={() => onDeleteTask && onDeleteTask(task.id)}
+                className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                <FaTrash className="text-red-500" />
               </button>
             </div>
           </li>
