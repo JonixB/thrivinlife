@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';  // Import icons from react-icons
+import { FaCheckCircle, FaTimesCircle, FaStar, FaRegStar } from 'react-icons/fa';  // Import icons from react-icons
 
 interface Task {
   id: string,
@@ -19,6 +19,15 @@ interface TaskCardProps {
   onTaskToggle?: (taskId: string) => void;
   onAddTask?: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
 }
+
+const renderStars = (priority: string) => {
+  const priorityNum = parseInt(priority, 10);
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    stars.push(i < priorityNum ? <FaStar key={i} /> : <FaRegStar key={i} />);
+  }
+  return stars;
+};
 
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
   const [taskTitle, setTaskTitle] = useState('');
@@ -43,16 +52,24 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
-          <li key={task.id} className="flex justify-between items-center mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
-            <span className="text-gray-700">
+          <li key={task.id} className="flex flex-col justify-between items-start mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
+            <span className="text-gray-700 font-bold">
               {task.task_title}
             </span>
-            <button
-              onClick={() => onTaskToggle && onTaskToggle(task.id)}
-              className="p-1 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
-            </button>
+            <span className="text-gray-700">
+              {task.task_description}
+            </span>
+            <div className="flex justify-between items-center w-full mt-2">
+              <div>
+                {renderStars(task.priority)}
+              </div>
+              <button
+                onClick={() => onTaskToggle && onTaskToggle(task.id)}
+                className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
+              </button>
+            </div>
           </li>
         )) : (
           <div className="text-center py-4">
