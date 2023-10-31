@@ -65,7 +65,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
     if (error) {
       console.error('Error adding task:', error);
-      toast.error('Failed to add task.'); 
+      toast.error('Failed to add task.');
       return;
     }
 
@@ -92,33 +92,55 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
   const handleTaskToggle = async (taskId: string) => {
     const taskToToggle = tasks.find(task => task.id === taskId);
-    
+
     if (!taskToToggle) {
-        console.error('Task not found:', taskId);
-        return;
+      console.error('Task not found:', taskId);
+      return;
     }
 
     const newStatus = taskToToggle.status === 'Complete' ? 'Incomplete' : 'Complete';
 
     const { error } = await supabase
-        .from('tasks')
-        .update({ status: newStatus })
-        .eq('id', taskId);
+      .from('tasks')
+      .update({ status: newStatus })
+      .eq('id', taskId);
 
     if (error) {
-        console.error('Error updating task status:', error);
-        toast.error('Failed to update task status.');
-        return;
+      console.error('Error updating task status:', error);
+      toast.error('Failed to update task status.');
+      return;
     }
 
     setTasks(prevTasks =>
-        prevTasks.map(task =>
-            task.id === taskId ? { ...task, status: newStatus } : task
-        )
+      prevTasks.map(task =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      )
     );
-    
+
     toast.success('Task status updated successfully.');
-};
+  };
+
+  const handleDeleteTask = async (taskId: string) => {
+    const confirmation = window.confirm('Are you sure you want to delete this task?');
+    if (!confirmation) {
+      return;
+    }
+
+    const { error } = await supabase
+      .from('tasks')
+      .delete()
+      .eq('id', taskId);
+
+    if (error) {
+      console.error('Error deleting task:', error);
+      toast.error('Failed to delete task.');
+      return;
+    }
+
+    // Re-fetch tasks
+    await fetchTasksForDate(selectedDate);
+    toast.success('Task deleted successfully.');
+  };
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
@@ -128,6 +150,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         onTaskToggle={handleTaskToggle}
         userAvatar={avatarUrl ? avatarUrl : avatar}
         onAddTask={handleAddTask}
+        onDeleteTask={handleDeleteTask}
       />
       <Calendar
         onChange={handleDateChange}

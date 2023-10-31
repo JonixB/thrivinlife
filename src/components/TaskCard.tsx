@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'; 
+import { FaCheckCircle, FaTimesCircle, FaTrash } from 'react-icons/fa'; 
 import StarRating from './StarRating'; 
 
 interface Task {
@@ -19,6 +19,7 @@ interface TaskCardProps {
   userAvatar?: string;
   onTaskToggle?: (taskId: string) => void;
   onAddTask?: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
+  onDeleteTask?: (taskId: string) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask }) => {
