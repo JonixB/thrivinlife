@@ -7,6 +7,7 @@ import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeleteConfirmation from './DeleteConfirmation';
+import TaskForm from './TaskForm';
 
 interface Task {
   id: string,
@@ -28,6 +29,8 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
+  const [isTaskFormModalOpen, setTaskFormModalOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
   useEffect(() => {
     fetchTasksForDate(selectedDate);
@@ -49,10 +52,19 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     setTasks(data || []);
   };
 
+  const handleOpenNewTaskForm = () => {
+    setTaskToEdit(null);
+    setTaskFormModalOpen(true);
+  };
 
-  const handleAddTask = async (taskTitle: string, taskDescription: string, priority: string, status: string) => {
+  const handleOpenEditTaskForm = (task: Task) => {
+    setTaskToEdit(task);
+    setTaskFormModalOpen(true);
+  };
+
+  const handleTaskFormSubmit = async (taskTitle: string, taskDescription: string, priority: string, status: string) => {
     const dueDateStr = selectedDate.toISOString().split('T')[0];
-    const newTask = {
+    const newTaskData = {
       user_id: userId,
       task_title: taskTitle,
       task_description: taskDescription,
@@ -60,21 +72,39 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       priority: priority,
       status: status
     };
-    console.log('New Task:', newTask);
 
-    const { error } = await supabase
-      .from('tasks')
-      .insert(newTask);
+    if (taskToEdit) {
+      const { error } = await supabase
+        .from('tasks')
+        .update(newTaskData)
+        .eq('id', taskToEdit.id);
 
-    if (error) {
-      console.error('Error adding task:', error);
-      toast.error('Failed to add task.');
-      return;
+      if (error) {
+        console.error('Error updating task:', error);
+        toast.error('Failed to update task.');
+        return;
+      }
+
+      toast.success('Task updated successfully.');
+    } else {
+      // Adding new task
+      const { error } = await supabase
+        .from('tasks')
+        .insert(newTaskData);
+
+      if (error) {
+        console.error('Error adding task:', error);
+        toast.error('Failed to add task.');
+        return;
+      }
+
+      toast.success('Task added successfully.');
     }
 
     // Re-fetch tasks
     await fetchTasksForDate(selectedDate);
-    toast.success('Task added successfully.');
+    setTaskFormModalOpen(false);
+    setTaskToEdit(null);
   };
 
   type ValuePiece = Date | null;
@@ -156,13 +186,20 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         onCancel={() => setDeleteModalOpen(false)}
         onConfirm={confirmDelete}
       />
+      <TaskForm
+        show={isTaskFormModalOpen}
+        onClose={() => setTaskFormModalOpen(false)}
+        onSubmit={handleTaskFormSubmit}
+        initialTask={taskToEdit}
+      />
       <TaskCard
         date={selectedDate.toDateString()}
         tasks={tasks}
         onTaskToggle={handleTaskToggle}
         userAvatar={avatarUrl ? avatarUrl : avatar}
-        onAddTask={handleAddTask}
+        onAddTask={handleOpenNewTaskForm}
         onDeleteTask={handleDeleteTask}
+        onEditTask={handleOpenEditTaskForm}
       />
       <Calendar
         onChange={handleDateChange}

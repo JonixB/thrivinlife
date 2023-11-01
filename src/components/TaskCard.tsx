@@ -20,9 +20,10 @@ interface TaskCardProps {
   onTaskToggle?: (taskId: string) => void;
   onAddTask?: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
   onDeleteTask?: (taskId: string) => void;
+  onEditTask?: (task: Task) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask }) => {
+const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask, onEditTask}) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('0');
@@ -45,7 +46,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
-          <li key={task.id} className="relative flex flex-col justify-between items-start mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
+          <li key={task.id} className="relative flex flex-col justify-between items-start mb-2 p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors" onClick={() => onEditTask && onEditTask(task)}>
             <span className="text-gray-700 font-bold">
               {task.task_title}
             </span>
