@@ -5,7 +5,7 @@ interface TaskFormProps {
   show: boolean;
   onClose: () => void;
   onSubmit: (taskTitle: string, taskDescription: string, priority: string, status: string) => void;
-  initialTask?: Task;
+  initialTask: Task | null;
 }
 
 interface Task {
