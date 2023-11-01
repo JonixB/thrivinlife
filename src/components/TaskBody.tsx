@@ -6,6 +6,7 @@ import avatar from '../assets/images/avatar.jpg';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteConfirmation from './DeleteConfirmation';
 
 interface Task {
   id: string,
@@ -25,6 +26,8 @@ interface Props {
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTasksForDate(selectedDate);
@@ -121,15 +124,17 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   };
 
   const handleDeleteTask = async (taskId: string) => {
-    const confirmation = window.confirm('Are you sure you want to delete this task?');
-    if (!confirmation) {
-      return;
-    }
+    setTaskToDelete(taskId);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!taskToDelete) return;
 
     const { error } = await supabase
       .from('tasks')
       .delete()
-      .eq('id', taskId);
+      .eq('id', taskToDelete);
 
     if (error) {
       console.error('Error deleting task:', error);
@@ -140,10 +145,17 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     // Re-fetch tasks
     await fetchTasksForDate(selectedDate);
     toast.success('Task deleted successfully.');
+    setDeleteModalOpen(false);
+    setTaskToDelete(null);
   };
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
+      <DeleteConfirmation
+        show={isDeleteModalOpen}
+        onCancel={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+      />
       <TaskCard
         date={selectedDate.toDateString()}
         tasks={tasks}
