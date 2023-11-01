@@ -67,7 +67,10 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
                 {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
               </button>
               <button
-                onClick={() => onDeleteTask && onDeleteTask(task.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteTask && onDeleteTask(task.id);
+              }}
                 className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 transition-colors"
               >
                 <FaTrash className="text-red-500" />
@@ -83,6 +86,7 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
 
       {/* Add Task Section */}
       <div className="border-t pt-4">
+
         <button onClick={() => onAddTask && onAddTask(taskTitle, taskDescription, priority, status)} className="w-full bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
           Add Task
         </button>
