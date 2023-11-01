@@ -83,13 +83,6 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
 
       {/* Add Task Section */}
       <div className="border-t pt-4">
-        <input type="text" placeholder="Task Title" value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)} className="w-full p-2 mb-2 border rounded" />
-        <input type="text" placeholder="Task Description" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} className="w-full p-2 mb-2 border rounded" />
-        <StarRating
-          rating={parseInt(priority, 10)}
-          onRatingChange={(newRating) => setPriority(newRating.toString())}
-        />
-        <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full p-2 mb-2 border rounded" />
         <button onClick={() => onAddTask && onAddTask(taskTitle, taskDescription, priority, status)} className="w-full bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
           Add Task
         </button>
