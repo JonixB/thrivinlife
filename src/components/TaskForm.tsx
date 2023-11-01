@@ -68,9 +68,20 @@ const TaskForm: React.FC<TaskFormProps> = ({ show, onClose, onSubmit, initialTas
               onRatingChange={(newRating) => setPriority(newRating.toString())}
             />
             <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full p-2 mb-2 border rounded" />
-            <button onClick={handleSubmit} className="w-full bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
-              Submit
-            </button>
+            <div className="border-t pt-4 flex justify-between"> 
+              <button
+                onClick={onClose}
+                className="w-1/2 bg-gray-300 text-black p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none mr-2" 
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="w-1/2 bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
