@@ -25,13 +25,18 @@ const TaskForm: React.FC<TaskFormProps> = ({ show, onClose, onSubmit, initialTas
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    if (initialTask) {
+    if (!show) { 
+      setTaskTitle('');
+      setTaskDescription('');
+      setPriority('0');
+      setStatus('');
+    } else if (initialTask) {
       setTaskTitle(initialTask.task_title);
       setTaskDescription(initialTask.task_description);
       setPriority(initialTask.priority);
       setStatus(initialTask.status);
     }
-  }, [initialTask]);
+  }, [show, initialTask]);
 
   const handleSubmit = () => {
     onSubmit(taskTitle, taskDescription, priority, status);
@@ -68,10 +73,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ show, onClose, onSubmit, initialTas
               onRatingChange={(newRating) => setPriority(newRating.toString())}
             />
             <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full p-2 mb-2 border rounded" />
-            <div className="border-t pt-4 flex justify-between"> 
+            <div className="border-t pt-4 flex justify-between">
               <button
                 onClick={onClose}
-                className="w-1/2 bg-gray-300 text-black p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none mr-2" 
+                className="w-1/2 bg-gray-300 text-black p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none mr-2"
               >
                 Cancel
               </button>

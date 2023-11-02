@@ -179,6 +179,11 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     setTaskToDelete(null);
   };
 
+  const handleFormClose = () => {
+    setTaskFormModalOpen(false);
+    setTaskToEdit(null);
+  };
+
   return (
     <div className="flex flex-col items-center space-y-4 py-8">
       <DeleteConfirmation
@@ -188,7 +193,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       />
       <TaskForm
         show={isTaskFormModalOpen}
-        onClose={() => setTaskFormModalOpen(false)}
+        onClose={handleFormClose}
         onSubmit={handleTaskFormSubmit}
         initialTask={taskToEdit}
       />
