@@ -185,7 +185,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 py-8">
+    <div className="flex flex-col items-center space-y-4 py-8 flex-grow">
       <DeleteConfirmation
         show={isDeleteModalOpen}
         onCancel={() => setDeleteModalOpen(false)}
@@ -210,6 +210,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         onChange={handleDateChange}
         value={selectedDate}
       />
+      <button className="bg-teal-500 text-white px-6 py-2 rounded-full">New</button>
     </div>
   );
 }

@@ -7,6 +7,8 @@ import Login from './components/Login';
 import { supabase } from './lib/helper/supabase';
 import { Session } from '@supabase/supabase-js';
 import { ToastContainer } from 'react-toastify';
+import Sidebar from './components/Sidebar';
+import Filter from './components/Filter';
 
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
         .select('profile_image')
         .eq('user_id', userId)
         .single();
-  
+
       if (error) {
         console.error('Error fetching avatar URL:', error);
         return;
@@ -59,12 +61,16 @@ function App() {
     <Router>
       <div className="App h-screen flex flex-col max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
-        <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
-          <Routes>
-            <Route path="/login" element={user ? <Navigate to="/tasks" /> : <Login />} />
-            <Route path="/tasks" element={user ? <TaskBody avatarUrl={avatarUrl} userId={user.user.id} /> : <Navigate to="/login" />} />
-            <Route path="*" element={<Navigate to={user ? "/tasks" : "/login"} />} />
-          </Routes>
+        <div className="flex flex-grow bg-gray-900 p-6">
+          {user && <Sidebar avatarUrl={avatarUrl} userName="Your Name" />}
+          <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
+            <Routes>
+              <Route path="/login" element={user ? <Navigate to="/tasks" /> : <Login />} />
+              <Route path="/tasks" element={user ? <TaskBody avatarUrl={avatarUrl} userId={user.user.id} /> : <Navigate to="/login" />} />
+              <Route path="*" element={<Navigate to={user ? "/tasks" : "/login"} />} />
+            </Routes>
+          </div>
+          {user && <Filter />}
         </div>
         <Footer />
         <ToastContainer position="top-right" />
