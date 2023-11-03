@@ -61,7 +61,7 @@ function App() {
     <Router>
       <div className="App h-screen flex flex-col max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
-        <div className="flex flex-grow bg-gray-900 p-6">
+        <div className="flex flex-grow bg-gray-100 p-6">
           {user && <Sidebar avatarUrl={avatarUrl} userName="Your Name" />}
           <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
             <Routes>

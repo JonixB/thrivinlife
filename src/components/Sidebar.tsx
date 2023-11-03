@@ -7,7 +7,7 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
   return (
-    <div className="flex flex-col w-60 bg-gray-900 text-white pr-8">
+    <div className="flex flex-col w-60 bg-gray-100 text-black pr-8">
       <div className="flex items-center mb-4">
         <div className="bg-white p-2 rounded-full mr-4">
           <img src={avatarUrl || 'default-avatar-url'} alt="User Avatar" width="40" height="40" />
