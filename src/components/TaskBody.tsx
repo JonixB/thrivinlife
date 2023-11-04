@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import TaskCard from './TaskCard';
 import avatar from '../assets/images/avatar.jpg';
