@@ -1,16 +1,34 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/helper/supabase';
 
-export const TaskContext = createContext(null);
+interface Task {
+  id: string;
+  user_id: string;
+  task_title: string;
+  task_description: string;
+  due_date: string;
+  priority: string;
+  status: string;
+}
+
+interface TaskContextProps {
+  selectedDate: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  fetchTasksForDate: (date: Date) => Promise<void>;
+}
+
+export const TaskContext = createContext<TaskContextProps | null>(null);
 
 interface TaskProviderProps {
+  children: React.ReactNode;
   userId: string;
 }
 
-
-export const TaskProvider: React.FC<React.PropsWithChildren<TaskProviderProps>> = ({ userId, children }) => {
+export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasksForDate = async (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
