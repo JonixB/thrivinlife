@@ -11,7 +11,7 @@ interface Task {
   status: string;
 }
 
-interface TaskContextProps {
+export interface TaskContextProps {
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
   tasks: Task[];
