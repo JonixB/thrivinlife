@@ -42,19 +42,6 @@ const Navbar: React.FC<Props> = ({ avatarUrl }) => {
           <h1 className="font-roboto text-2xl ml-1 self-center">ThrivinLife</h1>
         </div>
 
-        {/* Icons for larger screens */}
-        <div className="hidden md:flex space-x-4 items-center">
-          <button aria-label="Daily Tasks" className="focus:outline-none w-10 h-10 p-2">
-            <FaTasks className="w-full h-full" />
-          </button>
-          <button aria-label="Expenses Tracking" className="focus:outline-none w-10 h-10 p-2">
-            <FaWallet className="w-full h-full" />
-          </button>
-          <button aria-label="Fitness Tracking" className="focus:outline-none w-10 h-10 p-2">
-            <MdFitnessCenter className="w-full h-full" />
-          </button>
-        </div>
-
         {/* Avatar dropdown */}
         <div className="flex items-center relative">
 
