@@ -9,6 +9,7 @@ import { Session } from '@supabase/supabase-js';
 import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar';
 import Filter from './components/Filter';
+import { TaskProvider } from './context/TaskContext';
 
 
 function App() {
@@ -62,15 +63,24 @@ function App() {
       <div className="App h-screen flex flex-col max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
         <div className="flex flex-grow bg-gray-100 p-6">
-          {user && <Sidebar avatarUrl={avatarUrl} userName="Your Name" />}
-          <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
+          {user ? (
+            <TaskProvider userId={user.user.id}>
+              <Sidebar avatarUrl={avatarUrl} userName="Your Name" />
+              <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
+                <Routes>
+                  <Route path="/login" element={<Navigate to="/tasks" />} />
+                  <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
+                  <Route path="*" element={<Navigate to="/tasks" />} />
+                </Routes>
+              </div>
+              <Filter />
+            </TaskProvider>
+          ) : (
             <Routes>
-              <Route path="/login" element={user ? <Navigate to="/tasks" /> : <Login />} />
-              <Route path="/tasks" element={user ? <TaskBody avatarUrl={avatarUrl} userId={user.user.id} /> : <Navigate to="/login" />} />
-              <Route path="*" element={<Navigate to={user ? "/tasks" : "/login"} />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
-          </div>
-          {user && <Filter />}
+          )}
         </div>
         <Footer />
         <ToastContainer position="top-right" />
