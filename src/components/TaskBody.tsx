@@ -190,11 +190,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         onDeleteTask={handleDeleteTask}
         onEditTask={handleOpenEditTaskForm}
       />
-      <Calendar
-        onChange={handleDateChange}
-        value={selectedDate}
-      />
-      <button className="bg-teal-500 text-white px-6 py-2 rounded-full">New</button>
     </div>
   );
 }
