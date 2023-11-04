@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeleteConfirmation from './DeleteConfirmation';
 import TaskForm from './TaskForm';
+import { useTaskContext } from '../hooks/useTaskContext';
 
 interface Task {
   id: string,
@@ -25,8 +26,7 @@ interface Props {
 }
 
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const { selectedDate, setSelectedDate, tasks, setTasks, fetchTasksForDate } = useTaskContext();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
   const [isTaskFormModalOpen, setTaskFormModalOpen] = useState(false);
@@ -35,22 +35,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   useEffect(() => {
     fetchTasksForDate(selectedDate);
   }, []);
-
-  const fetchTasksForDate = async (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
-    const { data, error } = await supabase
-      .from('tasks')
-      .select('*')
-      .eq('due_date', dateStr)
-      .eq('user_id', userId);
-
-    if (error) {
-      console.error('Error fetching tasks:', error);
-      return;
-    }
-    console.log(data);
-    setTasks(data || []);
-  };
 
   const handleOpenNewTaskForm = () => {
     setTaskToEdit(null);
