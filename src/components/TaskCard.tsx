@@ -61,7 +61,10 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
                 />
               </div>      
               <button
-                onClick={() => onTaskToggle && onTaskToggle(task.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTaskToggle && onTaskToggle(task.id)
+                }}
                 className="p-1 rounded-full hover:bg-gray-200 transition-colors"
               >
                 {task.status === 'Complete' ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
