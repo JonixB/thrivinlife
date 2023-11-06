@@ -9,26 +9,39 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
   return (
-    <div className="flex flex-col w-60 bg-gray-100 text-black pr-8 rounded-lg shadow-lg p-4">
-      <div className="flex items-center mb-4">
-        <div className="bg-white p-2 rounded-full mr-4">
-          <img src={avatarUrl || 'default-avatar-url'} alt="User Avatar" width="40" height="40" />
+    <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 rounded-2xl shadow-2xl p-6">
+      <div className="flex items-center mb-6">
+        <div className="shrink-0">
+          <img
+            className="rounded-full border-2 border-blue-500 p-1"
+            src={avatarUrl || 'default-avatar-url'}
+            alt="User Avatar"
+            width="50"
+            height="50"
+          />
         </div>
-        <div className="text-xl font-semibold text-white">{userName}</div>
+        <div className="flex flex-col justify-center ml-4">
+          <div className="text-lg font-bold text-gray-900">{userName}</div>
+          <div className="text-sm text-gray-500">Welcome Back!</div>
+        </div>
       </div>
-      <ul className="space-y-4 text-gray-700">
+      <ul className="space-y-4">
         <li className="flex items-center">
-          <FaTasks className="mr-2" /> Daily Tasks
+          <FaTasks className="text-blue-500 mr-3" />
+          <span className="font-medium">Daily Tasks</span>
         </li>
         <li className="flex items-center">
-          <FaWallet className="mr-2" /> Budgeting
+          <FaWallet className="text-green-500 mr-3" />
+          <span className="font-medium">Budgeting</span>
         </li>
         <li className="flex items-center">
-          <MdFitnessCenter className="mr-2" /> Health
+          <MdFitnessCenter className="text-red-500 mr-3" />
+          <span className="font-medium">Health</span>
         </li>
       </ul>
-      <button className="mt-auto text-gray-400 flex items-center">
-        <FaSignOutAlt className="mr-2" /> Sign out
+      <button className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200">
+        <FaSignOutAlt className="mr-3" />
+        <span className="font-medium">Sign out</span>
       </button>
     </div>
   );
