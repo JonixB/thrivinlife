@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import avatar from '../assets/images/avatar.jpg';
 import { FaCheckCircle, FaTimesCircle, FaTrash } from 'react-icons/fa';
 import StarRating from './StarRating';
 
@@ -34,13 +33,6 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
       {/* Date and Avatar Section */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-bold text-xl text-black">{date}</h2>
-        <div className="w-10 h-10">
-          {userAvatar ? (
-            <img src={userAvatar} alt="User Avatar" className="w-full h-full rounded-full border-2 border-f5f5f5" />
-          ) : (
-            <img src={avatar} className="w-full h-full bg-gray-300 rounded-full" />
-          )}
-        </div>
       </div>
 
       {/* Tasks Section */}
