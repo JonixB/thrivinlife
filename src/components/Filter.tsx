@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Calendar from 'react-calendar';
-import { TaskContext } from '../context/TaskContext';
+import 'react-calendar/dist/Calendar.css'; // Ensure you import the base styles
 import { useTaskContext } from '../hooks/useTaskContext';
 
 const FilterSection: React.FC = () => {
@@ -18,15 +18,17 @@ const FilterSection: React.FC = () => {
       }
     };
 
-  return (
-    <div className="w-1/3 p-8 bg-white rounded-xl shadow-lg">
-      <h2 className="text-xl font-semibold mb-4">Filter by</h2>
-      <Calendar
-        onChange={handleDateChange}
-        value={selectedDate}
-      />
-    </div>
-  );
+    return (
+      <div className="w-1/4 p-8">
+        <Calendar
+          onChange={handleDateChange}
+          value={selectedDate}
+          calendarType="US"
+          className="border-none rounded-lg text-gray-700" 
+          tileClassName="hover:bg-blue-100" 
+        />
+      </div>
+    );
 };
 
 export default FilterSection;
