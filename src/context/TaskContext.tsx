@@ -17,8 +17,10 @@ export interface TaskContextProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   fetchTasksForDate: (date: Date) => Promise<void>;
+  isTaskFormModalOpen: boolean;
+  setTaskFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>; 
+  handleOpenNewTaskForm: () => void;
 }
-
 export const TaskContext = createContext<TaskContextProps | null>(null);
 
 interface TaskProviderProps {
@@ -29,6 +31,7 @@ interface TaskProviderProps {
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isTaskFormModalOpen, setTaskFormModalOpen] = useState(false);
 
   const fetchTasksForDate = async (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
@@ -46,12 +49,25 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
     setTasks(data || []);
   };
 
+  const handleOpenNewTaskForm = () => {
+    setTaskFormModalOpen(true);
+  };
+
   useEffect(() => {
     fetchTasksForDate(selectedDate);
   }, [selectedDate]);
 
   return (
-    <TaskContext.Provider value={{ selectedDate, setSelectedDate, tasks, setTasks, fetchTasksForDate }}>
+    <TaskContext.Provider value={{ 
+      selectedDate, 
+      setSelectedDate, 
+      tasks, 
+      setTasks, 
+      fetchTasksForDate,
+      isTaskFormModalOpen,
+      setTaskFormModalOpen,
+      handleOpenNewTaskForm
+    }}>
       {children}
     </TaskContext.Provider>
   );
