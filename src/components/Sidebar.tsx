@@ -9,7 +9,7 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
   return (
-    <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 rounded-2xl shadow-2xl p-6">
+    <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 p-6">
       <div className="flex items-center mb-6">
         <div className="shrink-0">
           <img
