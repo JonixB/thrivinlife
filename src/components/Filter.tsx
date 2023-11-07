@@ -1,10 +1,10 @@
 import React from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Ensure you import the base styles
+import 'react-calendar/dist/Calendar.css';
 import { useTaskContext } from '../hooks/useTaskContext';
 
 const FilterSection: React.FC = () => {
-  const { selectedDate, setSelectedDate, fetchTasksForDate } = useTaskContext();
+  const { selectedDate, setSelectedDate, fetchTasksForDate, handleOpenNewTaskForm } = useTaskContext();
 
   type ValuePiece = Date | null;
   type Value = ValuePiece | ValuePiece[];
@@ -20,10 +20,9 @@ const FilterSection: React.FC = () => {
 
   return (
     <div className="w-1/4 p-8">
-      {/* Add Task Button */}
       <div className="mb-4 flex justify-between">
         <button
-          onClick={() => {/* function to open task form modal */ }}
+          onClick={handleOpenNewTaskForm}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Add New Task
