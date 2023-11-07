@@ -25,10 +25,9 @@ interface Props {
 }
 
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
-  const { selectedDate, setSelectedDate, tasks, setTasks, fetchTasksForDate } = useTaskContext();
+  const { selectedDate, setSelectedDate, tasks, setTasks, fetchTasksForDate, isTaskFormModalOpen, setTaskFormModalOpen } = useTaskContext();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
-  const [isTaskFormModalOpen, setTaskFormModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
   useEffect(() => {
@@ -88,22 +87,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     await fetchTasksForDate(selectedDate);
     setTaskFormModalOpen(false);
     setTaskToEdit(null);
-  };
-
-  type ValuePiece = Date | null;
-  type Value = ValuePiece | ValuePiece[];
-
-  const handleDateChange = (value: Value, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    let date: Date | null = null;
-    if (Array.isArray(value)) {
-      date = value[0];
-    } else {
-      date = value;
-    }
-    if (date) {
-      setSelectedDate(date);
-      fetchTasksForDate(date);
-    }
   };
 
   const handleTaskToggle = async (taskId: string) => {
