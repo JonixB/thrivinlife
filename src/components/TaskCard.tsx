@@ -22,14 +22,14 @@ interface TaskCardProps {
   onEditTask?: (task: Task) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask, onEditTask}) => {
+const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask, onEditTask }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('0');
   const [status, setStatus] = useState('');
 
   return (
-    <div className="flex flex-col bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto mb-4">
+    <div className="flex flex-col w-full h-64 overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4">
       {/* Date and Avatar Section */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-bold text-xl text-black">{date}</h2>
@@ -51,7 +51,7 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
                   rating={parseInt(task.priority, 10)}
                   onRatingChange={() => { }}
                 />
-              </div>      
+              </div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -65,7 +65,7 @@ const TaskCard: React.FC<TaskCardProps> = ({date, tasks, userAvatar, onTaskToggl
                 onClick={(e) => {
                   e.stopPropagation();
                   onDeleteTask && onDeleteTask(task.id);
-              }}
+                }}
                 className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 transition-colors"
               >
                 <FaTrash className="text-red-500" />
