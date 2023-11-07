@@ -60,13 +60,13 @@ function App() {
 
   return (
     <Router>
-      <div className="App h-screen flex flex-col max-w-screen-xl mx-auto">
+      <div className="App flex flex-col h-screen max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
-        <div className="flex flex-grow bg-gray-100 p-6">
+        <div className="flex flex-1 overflow-hidden">
           {user ? (
             <TaskProvider userId={user.user.id}>
               <Sidebar avatarUrl={avatarUrl} userName="Your Name" />
-              <div className="bg-gray-100 p-4 flex flex-col justify-center flex-grow">
+              <div className="flex-grow bg-gray-100 p-6 overflow-auto">
                 <Routes>
                   <Route path="/login" element={<Navigate to="/tasks" />} />
                   <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
