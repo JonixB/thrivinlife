@@ -30,11 +30,6 @@ const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskTogg
 
   return (
     <div className="flex flex-col w-full h-64 overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4">
-      {/* Date and Avatar Section */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-bold text-xl text-black">{date}</h2>
-      </div>
-
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
