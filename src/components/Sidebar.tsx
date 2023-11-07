@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaTasks, FaWallet, FaSignOutAlt } from 'react-icons/fa';
+import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter } from 'react-icons/md';
+import { FaArrowCircleLeft } from 'react-icons/fa';
 
 interface Props {
   avatarUrl: string | null;
@@ -40,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         </li>
       </ul>
       <button className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200">
-        <FaSignOutAlt className="mr-3" />
+        <FaArrowCircleLeft className="mr-3" />
         <span className="font-medium">Sign out</span>
       </button>
     </div>
