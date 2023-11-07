@@ -72,14 +72,6 @@ const TaskCard: React.FC<TaskCardProps> = ({ tasks, userAvatar, onTaskToggle, on
           </div>
         )}
       </ul>
-
-      {/* Add Task Section */}
-      <div className="border-t pt-4">
-
-        <button onClick={() => onAddTask && onAddTask(taskTitle, taskDescription, priority, status)} className="w-full bg-3498db text-white p-2 rounded shadow hover:bg-opacity-90 transition ease-in-out duration-150 focus:outline-none">
-          Add Task
-        </button>
-      </div>
     </div>
   );
 };
