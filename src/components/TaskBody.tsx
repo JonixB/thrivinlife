@@ -169,6 +169,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
 
   return (
     <div className="flex flex-col items-center space-y-4 py-8 flex-grow">
+      <h2 className="text-2xl font-bold mb-4">{selectedDate.toDateString()}</h2>
       <DeleteConfirmation
         show={isDeleteModalOpen}
         onCancel={() => setDeleteModalOpen(false)}
@@ -181,7 +182,6 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
         initialTask={taskToEdit}
       />
       <TaskCard
-        date={selectedDate.toDateString()}
         tasks={tasks}
         onTaskToggle={handleTaskToggle}
         userAvatar={avatarUrl ? avatarUrl : avatar}

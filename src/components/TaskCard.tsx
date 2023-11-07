@@ -13,7 +13,6 @@ interface Task {
 }
 
 interface TaskCardProps {
-  date: string;
   tasks: Task[];
   userAvatar?: string;
   onTaskToggle?: (taskId: string) => void;
@@ -22,14 +21,14 @@ interface TaskCardProps {
   onEditTask?: (task: Task) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ date, tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask, onEditTask }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ tasks, userAvatar, onTaskToggle, onAddTask, onDeleteTask, onEditTask }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('0');
   const [status, setStatus] = useState('');
 
   return (
-    <div className="flex flex-col w-full h-64 overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4">
+    <div className="flex flex-col w-full h-96 overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4">
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (
