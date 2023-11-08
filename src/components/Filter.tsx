@@ -19,7 +19,7 @@ const FilterSection: React.FC = () => {
     };
 
   return (
-    <div className="w-1/4 p-8">
+    <div className="w-[370px] p-8">
       <div className="mb-4 flex justify-between">
         <button
           onClick={handleOpenNewTaskForm}
