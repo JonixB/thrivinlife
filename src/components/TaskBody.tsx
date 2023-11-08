@@ -151,7 +151,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 py-8 flex-grow">
+    <div className="flex flex-col items-center space-y-4 flex-grow">
       <h2 className="text-2xl font-bold mb-4">{selectedDate.toDateString()}</h2>
       <DeleteConfirmation
         show={isDeleteModalOpen}
