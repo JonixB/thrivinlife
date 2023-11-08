@@ -28,7 +28,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ tasks, userAvatar, onTaskToggle, on
   const [status, setStatus] = useState('');
 
   return (
-    <div className="flex flex-col w-full h-[980px] overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4">
+    <div className="flex flex-col w-full h-[980px] overflow-y-auto bg-white shadow-lg rounded-lg p-6 my-4 task-card-container">
       {/* Tasks Section */}
       <ul className="mb-4">
         {tasks.length > 0 ? tasks.map((task) => (

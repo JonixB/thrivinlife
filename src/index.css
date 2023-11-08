@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.task-card-container::-webkit-scrollbar {
+  @apply w-2; /* Tailwind utility for width */
+}
+
+.task-card-container::-webkit-scrollbar-track {
+  @apply bg-gray-100; /* Tailwind utility for track color */
+}
+
+.task-card-container::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full border-0; /* Tailwind utilities for thumb */
+}
+
+.task-card-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500; /* Tailwind utility for thumb hover color */
+}
