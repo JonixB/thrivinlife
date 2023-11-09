@@ -20,6 +20,7 @@ export interface TaskContextProps {
   isTaskFormModalOpen: boolean;
   setTaskFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>; 
   handleOpenNewTaskForm: () => void;
+  userId: string;
 }
 export const TaskContext = createContext<TaskContextProps | null>(null);
 
@@ -67,6 +68,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
       isTaskFormModalOpen,
       setTaskFormModalOpen,
       handleOpenNewTaskForm
+      ,userId
     }}>
       {children}
     </TaskContext.Provider>
