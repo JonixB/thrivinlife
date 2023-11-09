@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useTaskContext } from '../hooks/useTaskContext';
+import TaskSummary from './TaskSummary';
 
 const FilterSection: React.FC = () => {
   const { selectedDate, setSelectedDate, fetchTasksForDate, handleOpenNewTaskForm } = useTaskContext();
@@ -37,6 +38,8 @@ const FilterSection: React.FC = () => {
         className="border-none rounded-lg text-gray-700"
         tileClassName="hover:bg-blue-100"
       />
+
+      <TaskSummary />
     </div>
   );
 };

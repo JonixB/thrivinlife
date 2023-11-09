@@ -18,14 +18,13 @@ const TaskSummary: React.FC = () => {
       return;
     }
 
-    const { completed, total } = await fetchTasks(filter, userId); // Pass the user ID here
+    const { completed, total } = await fetchTasks(filter, userId); 
     setCompletedTasks(completed);
     setTotalTasks(total);
   };
 
-  // Handle the selection of a new time filter
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newFilter = event.target.value as TimeFilter; // Use type assertion here
+    const newFilter = event.target.value as TimeFilter; 
     setTimeFilter(newFilter);
     updateTasks(newFilter);
   };
@@ -34,7 +33,6 @@ const TaskSummary: React.FC = () => {
     updateTasks(timeFilter);
   }, [timeFilter]);
 
-  // Calculate completion rate for the circular progress bar
   const completionRate = calculateCompletionRate(completedTasks, totalTasks);
 
   return (
