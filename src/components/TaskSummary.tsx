@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateCompletionRate, fetchTasks } from '../lib/helper/taskHelper';
 import { useTaskContext } from '../hooks/useTaskContext';
+import CircularProgress from './CircularProgress';
 
 type TimeFilter = 'This Week' | 'This Month' | 'This Year' | 'Custom';
 
@@ -18,13 +19,13 @@ const TaskSummary: React.FC = () => {
       return;
     }
 
-    const { completed, total } = await fetchTasks(filter, userId); 
+    const { completed, total } = await fetchTasks(filter, userId);
     setCompletedTasks(completed);
     setTotalTasks(total);
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newFilter = event.target.value as TimeFilter; 
+    const newFilter = event.target.value as TimeFilter;
     setTimeFilter(newFilter);
     updateTasks(newFilter);
   };
@@ -53,8 +54,11 @@ const TaskSummary: React.FC = () => {
 
       <div>
         {/* circular progress bar here */}
-        <div className="text-center">
-          <span className="text-lg font-semibold">{completedTasks} / {totalTasks}</span>
+        <div className="mt-4">
+          <CircularProgress completionRate={completionRate} />
+          <div className="text-center mt-2">
+            <span className="text-lg font-semibold">{completedTasks} / {totalTasks} Tasks</span>
+          </div>
         </div>
       </div>
     </div>
