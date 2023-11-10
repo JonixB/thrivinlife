@@ -55,10 +55,7 @@ const TaskSummary: React.FC = () => {
       <div>
         {/* circular progress bar here */}
         <div className="mt-4">
-          <CircularProgress completionRate={completionRate} />
-          <div className="text-center mt-2">
-            <span className="text-lg font-semibold">{completedTasks} / {totalTasks} Tasks</span>
-          </div>
+          <CircularProgress value={completedTasks} max={totalTasks} />
         </div>
       </div>
     </div>
