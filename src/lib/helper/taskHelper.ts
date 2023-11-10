@@ -10,31 +10,31 @@ interface Task {
   status: string;
 }
 
-const getStartDate = (filter: 'Last Week' | 'Last Month' | 'Last Year' | 'Custom') => {
+const getStartDate = (filter: 'This Week' | 'This Month' | 'This Year' | 'Custom') => {
   const now = new Date();
   now.setHours(0, 0, 0, 0); // Set the time to the start of the day
 
   switch (filter) {
-    case 'Last Week':
-      now.setDate(now.getDate() - now.getDay() - 7); // Subtract the number of days since last Sunday and an additional week
+    case 'This Week':
+      now.setDate(now.getDate() - now.getDay());
       break;
-    case 'Last Month':
-      now.setMonth(now.getMonth() - 1, 1); // Set to the first day of the last month
+    case 'This Month':
+      now.setDate(1);
       break;
-    case 'Last Year':
-      now.setFullYear(now.getFullYear() - 1, 0, 1); // Set to the first day of the last year
+    case 'This Year':
+      now.setMonth(0, 1); 
       break;
     case 'Custom':
-      // For 'Custom', you'll need to define how you want to allow users to pick a range
+      // For customs 
       break;
     default:
       throw new Error(`Unknown filter: ${filter}`);
   }
-  return now.toISOString().split('T')[0]; // Return the date string in YYYY-MM-DD format
+  return now.toISOString().split('T')[0];
 };
 
 export const fetchTasks = async (
-  filter: 'Last Week' | 'Last Month' | 'Last Year' | 'Custom',
+  filter: 'This Week' | 'This Month' | 'This Year' | 'Custom',
   userId: string
 ): Promise<{ completed: number; total: number }> => {
   const startDate = getStartDate(filter);
