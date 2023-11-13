@@ -2,6 +2,8 @@ import React from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter } from 'react-icons/md';
 import { FaArrowCircleLeft } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { supabase } from '../lib/helper/supabase';
 
 interface Props {
   avatarUrl: string | null;
@@ -9,6 +11,15 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error logging out:', error);
+    } else {
+      toast.success('Successfully logged out!');
+    }
+  };
+
   return (
     <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 p-6">
       <div className="flex items-center mb-6">
@@ -41,7 +52,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         </li>
       </ul>
       <button className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200">
-        <FaArrowCircleLeft className="mr-3" />
+        <FaArrowCircleLeft onClick={handleLogout} className="mr-3" />
         <span className="font-medium">Sign out</span>
       </button>
     </div>
