@@ -18,9 +18,13 @@ export interface TaskContextProps {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   fetchTasksForDate: (date: Date) => Promise<void>;
   isTaskFormModalOpen: boolean;
-  setTaskFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>; 
+  setTaskFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleOpenNewTaskForm: () => void;
   userId: string;
+  completedTasks: number;
+  setCompletedTasks: React.Dispatch<React.SetStateAction<number>>;
+  totalTasks: number;
+  setTotalTasks: React.Dispatch<React.SetStateAction<number>>;
 }
 export const TaskContext = createContext<TaskContextProps | null>(null);
 
@@ -33,6 +37,8 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isTaskFormModalOpen, setTaskFormModalOpen] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState(0);
+  const [totalTasks, setTotalTasks] = useState(0);
 
   const fetchTasksForDate = async (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
@@ -59,16 +65,20 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
   }, [selectedDate]);
 
   return (
-    <TaskContext.Provider value={{ 
-      selectedDate, 
-      setSelectedDate, 
-      tasks, 
-      setTasks, 
+    <TaskContext.Provider value={{
+      selectedDate,
+      setSelectedDate,
+      tasks,
+      setTasks,
       fetchTasksForDate,
       isTaskFormModalOpen,
       setTaskFormModalOpen,
-      handleOpenNewTaskForm
-      ,userId
+      handleOpenNewTaskForm,
+      userId,
+      completedTasks,
+      setCompletedTasks,
+      totalTasks,
+      setTotalTasks
     }}>
       {children}
     </TaskContext.Provider>
