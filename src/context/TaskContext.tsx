@@ -52,10 +52,12 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
       console.error('Error fetching tasks:', error);
       return;
     }
-    console.log(data);
-    setTasks(data || []);
-  };
 
+    const fetchedTasks = data || [];
+    setTasks(fetchedTasks);
+    setCompletedTasks(fetchedTasks.filter(task => task.status === 'Complete').length);
+    setTotalTasks(fetchedTasks.length);
+  };
   const handleOpenNewTaskForm = () => {
     setTaskFormModalOpen(true);
   };
