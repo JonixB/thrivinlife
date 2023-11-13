@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { calculateCompletionRate, fetchTasks } from '../lib/helper/taskHelper';
+import { fetchTasks } from '../lib/helper/taskHelper';
 import { useTaskContext } from '../hooks/useTaskContext';
 import CircularProgress from './CircularProgress';
 
 type TimeFilter = 'This Week' | 'This Month' | 'This Year' | 'Custom';
 
 const TaskSummary: React.FC = () => {
-  const { userId } = useTaskContext();
+  const { userId, completedTasks, totalTasks } = useTaskContext();
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('This Week');
-  const [completedTasks, setCompletedTasks] = useState(0);
-  const [totalTasks, setTotalTasks] = useState(0);
 
   // Fetch tasks based on the selected time filter
   const updateTasks = async (filter: TimeFilter) => {
@@ -19,9 +17,7 @@ const TaskSummary: React.FC = () => {
       return;
     }
 
-    const { completed, total } = await fetchTasks(filter, userId);
-    setCompletedTasks(completed);
-    setTotalTasks(total);
+    await fetchTasks(filter, userId);
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -33,8 +29,6 @@ const TaskSummary: React.FC = () => {
   useEffect(() => {
     updateTasks(timeFilter);
   }, [timeFilter]);
-
-  const completionRate = calculateCompletionRate(completedTasks, totalTasks);
 
   return (
     <div className="flex flex-col items-center p-4">

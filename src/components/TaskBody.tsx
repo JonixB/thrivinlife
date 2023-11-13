@@ -25,7 +25,7 @@ interface Props {
 }
 
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
-  const { selectedDate, setSelectedDate, tasks, setTasks, fetchTasksForDate, isTaskFormModalOpen, setTaskFormModalOpen } = useTaskContext();
+  const { selectedDate, tasks, setTasks, fetchTasksForDate, isTaskFormModalOpen, setTaskFormModalOpen } = useTaskContext();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
@@ -117,6 +117,7 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
     );
 
     toast.success('Task status updated successfully.');
+    await fetchTasksForDate(selectedDate);
   };
 
   const handleDeleteTask = async (taskId: string) => {
