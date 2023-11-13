@@ -46,7 +46,8 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
       .from('tasks')
       .select('*')
       .eq('due_date', dateStr)
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('Error fetching tasks:', error);
