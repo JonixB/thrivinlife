@@ -58,6 +58,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children, userId }) 
     setCompletedTasks(fetchedTasks.filter(task => task.status === 'Complete').length);
     setTotalTasks(fetchedTasks.length);
   };
+
   const handleOpenNewTaskForm = () => {
     setTaskFormModalOpen(true);
   };
