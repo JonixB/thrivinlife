@@ -65,7 +65,7 @@ function App() {
         <div className="flex flex-1 overflow-hidden">
           {user ? (
             <TaskProvider userId={user.user.id}>
-              <Sidebar avatarUrl={avatarUrl} userName="Your Name" />
+              <Sidebar avatarUrl={avatarUrl} userName={user.user.email} />
               <div className="flex-grow bg-gray-100 p-6 overflow-auto">
                 <Routes>
                   <Route path="/login" element={<Navigate to="/tasks" />} />
