@@ -21,7 +21,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
   };
 
   return (
-    <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 p-6">
+    <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 p-6 z-20">
       <div className="flex items-center mb-6">
         <div className="shrink-0">
           <img
@@ -51,8 +51,11 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
           <span className="font-medium">Health</span>
         </li>
       </ul>
-      <button className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200">
-        <FaArrowCircleLeft onClick={handleLogout} className="mr-3" />
+      <button
+        onClick={handleLogout}
+        className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
+      >
+        <FaArrowCircleLeft className="mr-3" />
         <span className="font-medium">Sign out</span>
       </button>
     </div>
