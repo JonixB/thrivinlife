@@ -25,7 +25,7 @@ interface Props {
 }
 
 const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
-  const { selectedDate, tasks, setTasks, fetchTasksForDate, isTaskFormModalOpen, setTaskFormModalOpen } = useTaskContext();
+  const { selectedDate, tasks, setTasks, fetchTasksForDate, isTaskFormModalOpen, setTaskFormModalOpen, setCompletedTasks } = useTaskContext();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
@@ -90,14 +90,13 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
   };
 
   const handleTaskToggle = async (taskId: string) => {
-    const taskToToggle = tasks.find(task => task.id === taskId);
-
-    if (!taskToToggle) {
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    if (taskIndex === -1) {
       console.error('Task not found:', taskId);
       return;
     }
 
-    const newStatus = taskToToggle.status === 'Complete' ? 'Incomplete' : 'Complete';
+    const newStatus = tasks[taskIndex].status === 'Complete' ? 'Incomplete' : 'Complete';
 
     const { error } = await supabase
       .from('tasks')
@@ -110,14 +109,14 @@ const TasksBody: React.FC<Props> = ({ avatarUrl, userId }) => {
       return;
     }
 
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId ? { ...task, status: newStatus } : task
-      )
-    );
+    const updatedTasks = [...tasks];
+    updatedTasks[taskIndex] = { ...updatedTasks[taskIndex], status: newStatus };
+    setTasks(updatedTasks);
+
+    const completedCount = updatedTasks.filter(task => task.status === 'Complete').length;
+    setCompletedTasks(completedCount);
 
     toast.success('Task status updated successfully.');
-    await fetchTasksForDate(selectedDate);
   };
 
   const handleDeleteTask = async (taskId: string) => {
