@@ -9,7 +9,6 @@ const CircularProgress: React.FC<CircularProgressProps> = ({ value, max }) => {
   const normalizedRadius = radius - strokeWidth * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = max > 0 ? circumference - (value / max) * circumference : 0;
-  const progressPercentage = max > 0 ? Math.round((value / max) * 100) : 0;
 
   return (
     <div className="relative flex items-center justify-center w-32 h-32">
