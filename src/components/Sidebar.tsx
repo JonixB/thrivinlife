@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter } from 'react-icons/md';
 import { FaArrowCircleLeft } from 'react-icons/fa';
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
+  const [activeItem, setActiveItem] = useState<string>('');
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -38,15 +39,24 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         </div>
       </div>
       <ul className="space-y-4">
-        <li className="flex items-center">
+        <li
+          className={`flex items-center ${activeItem === 'DailyTasks' ? 'bg-blue-200' : ''}`}
+          onClick={() => setActiveItem('DailyTasks')}
+        >
           <FaTasks className="text-blue-500 mr-3" />
           <span className="font-medium">Daily Tasks</span>
         </li>
-        <li className="flex items-center">
+        <li
+          className={`flex items-center ${activeItem === 'Budgeting' ? 'bg-blue-200' : ''}`}
+          onClick={() => setActiveItem('Budgeting')}
+        >
           <FaWallet className="text-green-500 mr-3" />
           <span className="font-medium">Budgeting</span>
         </li>
-        <li className="flex items-center">
+        <li
+          className={`flex items-center ${activeItem === 'Health' ? 'bg-blue-200' : ''}`}
+          onClick={() => setActiveItem('Health')}
+        >
           <MdFitnessCenter className="text-red-500 mr-3" />
           <span className="font-medium">Health</span>
         </li>
