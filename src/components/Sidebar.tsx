@@ -40,21 +40,24 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
       </div>
       <ul className="space-y-4">
         <li
-          className={`flex items-center ${activeItem === 'DailyTasks' ? 'bg-blue-200' : ''}`}
+          className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
+          ${activeItem === 'DailyTasks' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
           onClick={() => setActiveItem('DailyTasks')}
         >
           <FaTasks className="text-blue-500 mr-3" />
           <span className="font-medium">Daily Tasks</span>
         </li>
         <li
-          className={`flex items-center ${activeItem === 'Budgeting' ? 'bg-blue-200' : ''}`}
+          className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
+          ${activeItem === 'Budgeting' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
           onClick={() => setActiveItem('Budgeting')}
         >
           <FaWallet className="text-green-500 mr-3" />
           <span className="font-medium">Budgeting</span>
         </li>
         <li
-          className={`flex items-center ${activeItem === 'Health' ? 'bg-blue-200' : ''}`}
+          className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
+          ${activeItem === 'Health' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
           onClick={() => setActiveItem('Health')}
         >
           <MdFitnessCenter className="text-red-500 mr-3" />
