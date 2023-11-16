@@ -12,6 +12,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, onRatingChange }) => {
       {[1, 2, 3, 4, 5].map(star => (
         <button
           key={star}
+          type="button"
           onClick={() => onRatingChange(star)}
           className="text-yellow-400 text-xl cursor-pointer"
         >
