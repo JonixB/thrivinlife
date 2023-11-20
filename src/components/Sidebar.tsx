@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
-  const [activeItem, setActiveItem] = useState<string>('');
+  const [activeItem, setActiveItem] = useState<string>('DailyTasks');
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
