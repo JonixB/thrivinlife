@@ -1,7 +1,7 @@
 import React from 'react';
 //import { IncomeEntry } from './IncomeEntry'; To be created
 
-const IncomeList: React.FC = () => {
+const IncomesList: React.FC = () => {
   return (
     <div className="p-4">
       <h2 className="text-lg font-semibold">Income</h2>
@@ -18,4 +18,4 @@ const IncomeList: React.FC = () => {
   );
 };
 
-export default IncomeList;
+export default IncomesList;
