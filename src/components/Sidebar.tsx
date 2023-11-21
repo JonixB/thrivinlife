@@ -4,6 +4,7 @@ import { MdFitnessCenter } from 'react-icons/md';
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { supabase } from '../lib/helper/supabase';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   avatarUrl: string | null;
@@ -12,6 +13,18 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
   const [activeItem, setActiveItem] = useState<string>('DailyTasks');
+  const navigate = useNavigate();
+
+  const handleItemClick = (item: string) => {
+    setActiveItem(item);
+    if (item === 'Budgeting') {
+      navigate('/budgeting');
+    }
+    if (item === 'DailyTasks') {
+      navigate('/tasks');
+    }
+  };
+
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -42,7 +55,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         <li
           className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
           ${activeItem === 'DailyTasks' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
-          onClick={() => setActiveItem('DailyTasks')}
+          onClick={() => handleItemClick('DailyTasks')}
         >
           <FaTasks className="text-blue-500 mr-3" />
           <span className="font-medium">Daily Tasks</span>
@@ -50,7 +63,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         <li
           className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
           ${activeItem === 'Budgeting' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
-          onClick={() => setActiveItem('Budgeting')}
+          onClick={() => handleItemClick('Budgeting')}
         >
           <FaWallet className="text-green-500 mr-3" />
           <span className="font-medium">Budgeting</span>
@@ -58,7 +71,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
         <li
           className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-300 
           ${activeItem === 'Health' ? 'bg-blue-500 text-white shadow-lg' : 'hover:bg-blue-100 text-gray-800'}`}
-          onClick={() => setActiveItem('Health')}
+          onClick={() => handleItemClick('Health')}
         >
           <MdFitnessCenter className="text-red-500 mr-3" />
           <span className="font-medium">Health</span>
