@@ -10,7 +10,8 @@ import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar';
 import Filter from './components/Filter';
 import { TaskProvider } from './context/TaskContext';
-import BudgetingComps from './components/BudgetingComps';
+import MainContent from './components/MainContent';
+
 
 
 function App() {
@@ -65,18 +66,7 @@ function App() {
         {user && <Navbar avatarUrl={avatarUrl} />}
         <div className="flex flex-1 overflow-hidden">
           {user ? (
-            <TaskProvider userId={user.user.id}>
-              <Sidebar avatarUrl={avatarUrl} userName={user.user.email} />
-              <div className="flex-grow bg-gray-100 p-6 overflow-auto">
-                <Routes>
-                  <Route path="/login" element={<Navigate to="/tasks" />} />
-                  <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
-                  <Route path="*" element={<Navigate to="/tasks" />} />
-                  <Route path="/budgeting" element={<BudgetingComps />} />
-                </Routes>
-              </div>
-              <Filter />
-            </TaskProvider>
+            <MainContent user={user} avatarUrl={avatarUrl} />
           ) : (
             <Routes>
               <Route path="/login" element={<Login />} />
