@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar';
 import Filter from './components/Filter';
 import { TaskProvider } from './context/TaskContext';
+import BudgetingComps from './components/BudgetingComps';
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
                   <Route path="/login" element={<Navigate to="/tasks" />} />
                   <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
                   <Route path="*" element={<Navigate to="/tasks" />} />
+                  <Route path="/budgeting" element={<BudgetingComps />} />
                 </Routes>
               </div>
               <Filter />
