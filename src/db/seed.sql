@@ -24,6 +24,26 @@ CREATE TABLE tasks (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+CREATE TABLE incomes (
+  id serial PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id),
+  date DATE,
+  amount NUMERIC(10, 2),
+  category TEXT,
+  notes text
+);
+
+CREATE TABLE expenses (
+  id serial PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id),
+  date DATE,
+  category TEXT,
+  amount NUMERIC(10, 2),
+  payment_method TEXT,
+  vendor TEXT,
+  notes text
+);
+
 -- Seed data
 INSERT INTO profiles (user_id, profile_image, first_name, last_name)
 VALUES
