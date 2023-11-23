@@ -56,3 +56,11 @@ VALUES
     ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Fix task form', 'Fix the sidebar as its also highlighted when adding new task', '2023-11-13', 4, 'Complete'),
     ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Email', 'Display email instead of "Your Name"', '2023-11-13', 4, 'Complete'),
     ('6b869d31-4c41-49bf-8be6-4cbb48d42249', 'Task Summary', 'Make task summary to re-render on every update', '2023-11-13', 5, 'Complete');
+
+INSERT INTO incomes (user_id, date, amount, category, notes)
+VALUES
+    ('6b869d31-4c41-49bf-8be6-4cbb48d42249', '2023-11-23', 1448.50, 'Payroll', 'Main Income');
+
+INSERT INTO expenses (user_id, date, category, amount, payment_method, vendor, notes)
+VALUES
+    ('6b869d31-4c41-49bf-8be6-4cbb48d42249', '2023-11-23', 'Entertainment', 18.50, 'Credit Card', 'Netflix', 'Netflix Subscription');
