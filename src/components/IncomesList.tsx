@@ -3,11 +3,10 @@ import IncomeForm from './IncomeForm';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
-const { userId } = useTaskContext();
 
 const IncomesList: React.FC = () => {
   const [isIncomeFormOpen, setIncomeFormOpen] = useState(false);
-  
+  const { userId } = useTaskContext();
 
   const handleOpenIncomeForm = () => {
     setIncomeFormOpen(true);
@@ -18,7 +17,7 @@ const IncomesList: React.FC = () => {
       console.error('User ID is not available');
       return;
     }
-    
+
     const newIncomeData = {
       user_id: userId,
       date,
