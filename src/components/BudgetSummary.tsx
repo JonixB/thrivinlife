@@ -22,27 +22,36 @@ const BudgetSummary: React.FC = () => {
   }, [selectedMonth, userId]);
 
   const balance = totalIncome - totalExpenses;
+
   return (
-    <div className="p-4 mt-4 border-t">
-      <div className="flex justify-between">
-        <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-          {getMonthOptions().map((month) => (
-            <option key={month.value} value={month.value}>
-              {month.label}
-            </option>
-          ))}
-        </select>
-        <div>
-          <h3 className="font-semibold">Total Income:</h3>
-          <p>{totalIncome}</p>
+    <div className="p-4 mt-4 border-t border-gray-200">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="mb-4 md:mb-0">
+          <label htmlFor="month-select" className="block text-sm font-medium text-gray-700 mb-1">Select Month</label>
+          <select
+            id="month-select"
+            className="block w-full md:w-48 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            {getMonthOptions().map((month) => (
+              <option key={month.value} value={month.value}>
+                {month.label}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <h3 className="font-semibold">Total Expenses:</h3>
-          <p>{totalExpenses}</p>
+        <div className="text-center md:text-left">
+          <h3 className="text-lg font-semibold text-gray-700">Total Income:</h3>
+          <p className="text-xl font-bold text-green-500">${totalIncome.toFixed(2)}</p>
         </div>
-        <div>
-          <h3 className="font-semibold">Balance:</h3>
-          <p>{balance}</p>
+        <div className="text-center md:text-left">
+          <h3 className="text-lg font-semibold text-gray-700">Total Expenses:</h3>
+          <p className="text-xl font-bold text-red-500">${totalExpenses.toFixed(2)}</p>
+        </div>
+        <div className="text-center md:text-left">
+          <h3 className="text-lg font-semibold text-gray-700">Balance:</h3>
+          <p className="text-xl font-bold text-blue-600">${balance.toFixed(2)}</p>
         </div>
       </div>
     </div>
@@ -66,6 +75,5 @@ const getCurrentMonth = () => {
   const date = new Date();
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 };
-
 
 export default BudgetSummary;
