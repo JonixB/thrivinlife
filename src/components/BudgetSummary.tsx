@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { fetchBudgetData } from '../lib/helper/budgetHelper';
 import { useTaskContext } from '../hooks/useTaskContext';
 
-const BudgetSummary: React.FC = () => {
+const BudgetSummary: React.FC<{ selectedMonth: string; setSelectedMonth: React.Dispatch<React.SetStateAction<string>> }> = ({ selectedMonth, setSelectedMonth }) => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
-  const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
   const { userId } = useTaskContext();
 
   useEffect(() => {
