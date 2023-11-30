@@ -4,7 +4,7 @@ import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
 
-const IncomesList: React.FC = () => {
+const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => {
   const [isIncomeFormOpen, setIncomeFormOpen] = useState(false);
   const { userId } = useTaskContext();
 
