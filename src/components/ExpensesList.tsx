@@ -1,23 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExpenseForm from './ExpenseForm';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
 
+interface Expense {
+  id: number;
+  amount: number;
+  date: string;
+  category: string;
+  paymentMethod: string;
+  vendor: string;
+  notes: string;
+}
+
 const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => {
   const [isExpenseFormOpen, setExpenseFormOpen] = useState(false);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const { userId } = useTaskContext();
 
   const handleOpenExpenseForm = () => {
     setExpenseFormOpen(true);
   };
 
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      // Define the start and end dates for the month
+      const startDate = new Date(selectedMonth);
+      const endDate = new Date(selectedMonth);
+      endDate.setMonth(endDate.getMonth() + 1);
+      endDate.setDate(0);
+
+      const { data, error } = await supabase
+        .from('expenses')
+        .select('*')
+        .gte('date', startDate.toISOString())
+        .lte('date', endDate.toISOString())
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Error fetching expenses:', error);
+      } else {
+        setExpenses(data);
+      }
+    };
+
+    if (userId) {
+      fetchExpenses();
+    }
+  }, [selectedMonth, userId]);
+
   const handleExpenseFormSubmit = async (date: string, category: string, amount: number, paymentMethod: string, vendor: string, notes: string) => {
     if (!userId) {
       console.error('User ID is not available');
       return;
     }
-    
+
     const newExpenseData = {
       user_id: userId,
       date,
