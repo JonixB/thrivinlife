@@ -76,19 +76,52 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
 
   return (
     <div className="p-4">
-      <h2 className="text-lg font-semibold">Income</h2>
-      
+      <h2 className="text-lg font-semibold mb-4">Income</h2>
+
       <button
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleOpenIncomeForm}
       >
         Add Income
       </button>
+
       <IncomeForm
         show={isIncomeFormOpen}
         onClose={() => setIncomeFormOpen(false)}
         onSubmit={handleIncomeFormSubmit}
       />
+
+      {/* Income Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse bg-white">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Category
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Notes
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {incomes.map(income => (
+              <tr key={income.id}>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.date}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.category}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">${income.amount.toFixed(2)}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
