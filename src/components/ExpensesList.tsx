@@ -81,19 +81,60 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
 
   return (
     <div className="p-4">
-      <h2 className="text-lg font-semibold">Expenses</h2>
-      {/* Your expenses list rendering */}
+      <h2 className="text-lg font-semibold mb-4">Expenses</h2>
+
       <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={handleOpenExpenseForm}
+        className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        onClick={() => setExpenseFormOpen(true)}
       >
         Add Expense
       </button>
+
       <ExpenseForm
         show={isExpenseFormOpen}
         onClose={() => setExpenseFormOpen(false)}
         onSubmit={handleExpenseFormSubmit}
       />
+
+      {/* Expenses Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse bg-white">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Category
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Payment Method
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Vendor
+              </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Notes
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {expenses.map(expense => (
+              <tr key={expense.id}>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.date}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.category}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">${expense.amount.toFixed(2)}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.paymentMethod}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.vendor}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
