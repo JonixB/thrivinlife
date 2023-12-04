@@ -80,7 +80,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-[37.5vh] overflow-y-auto">
       <h2 className="text-lg font-semibold mb-4">Expenses</h2>
 
       <button
