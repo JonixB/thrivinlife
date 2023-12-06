@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface IncomeFormProps {
   show: boolean;
@@ -27,6 +27,21 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ show, onClose, onSubmit, income
   const [amount, setAmount] = useState(income ? income.amount.toString() : '');
   const [category, setCategory] = useState(income ? income.category : '');
   const [notes, setNotes] = useState(income ? income.notes : '');
+
+  useEffect(() => {
+    if (income) {
+      setDate(income.date);
+      setAmount(income.amount.toString());
+      setCategory(income.category);
+      setNotes(income.notes);
+    } else {
+      // Reset form fields
+      setDate('');
+      setAmount('');
+      setCategory('');
+      setNotes('');
+    }
+  }, [income]);
 
 
   const handleSubmit = (e: React.FormEvent) => {
