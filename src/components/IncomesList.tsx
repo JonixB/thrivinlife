@@ -19,6 +19,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
   const [editingIncome, setEditingIncome] = useState<Income | null>(null);
 
   const handleOpenIncomeForm = () => {
+    setEditingIncome(null);
     setIncomeFormOpen(true);
   };
 
@@ -61,16 +62,16 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
       try {
         const { error } = await supabase
           .from('incomes')
-          .update({ 
+          .update({
             amount: income.amount,
             date: income.date,
             category: income.category,
             notes: income.notes
           })
           .eq('id', editingIncome.id); // Match the record by ID for update
-  
+
         if (error) throw error;
-  
+
         setIncomes(incomes.map(item => item.id === editingIncome.id ? income : item));
         toast.success('Income updated successfully.');
       } catch (error) {
@@ -80,7 +81,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
     } else {
       try {
         const { error } = await supabase.from('incomes').insert([income]);
-  
+
         if (error) throw error;
         setIncomes([...incomes, income]);
         toast.success('Income added successfully.');
@@ -89,7 +90,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
         toast.error('Failed to add income.');
       }
     }
-  
+
     // Reset editing state and close the form
     setEditingIncome(null);
     setIncomeFormOpen(false);
