@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 interface IncomeFormProps {
   show: boolean;
   onClose: () => void;
-  onSubmit: (date: string, amount: number, category: string, notes: string) => void;
+  onSubmit: (income: Income) => void;
   income?: Income | null;
 }
 
@@ -15,6 +15,12 @@ interface Income {
   notes: string;
 }
 
+interface NewIncome {
+  amount: number;
+  date: string;
+  category: string;
+  notes: string;
+}
 
 const IncomeForm: React.FC<IncomeFormProps> = ({ show, onClose, onSubmit, income }) => {
   const [date, setDate] = useState(income ? income.date : '');
@@ -25,7 +31,29 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ show, onClose, onSubmit, income
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(date, parseFloat(amount), category, notes);
+
+    const isEditing = income && income.id !== undefined;
+    if (isEditing) {
+      const updatedIncome: Income = {
+        id: income.id,
+        date,
+        amount: parseFloat(amount),
+        category,
+        notes
+      };
+      onSubmit(updatedIncome);
+    } else {
+      // New income: No id
+      const newIncome: NewIncome = {
+        date,
+        amount: parseFloat(amount),
+        category,
+        notes
+      };
+      onSubmit(newIncome as Income);
+    }
+
+    // Reset form fields
     setDate('');
     setAmount('');
     setCategory('');
