@@ -16,10 +16,17 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
   const [isIncomeFormOpen, setIncomeFormOpen] = useState(false);
   const [incomes, setIncomes] = useState<Income[]>([]);
   const { userId } = useTaskContext();
+  const [editingIncome, setEditingIncome] = useState<Income | null>(null);
 
   const handleOpenIncomeForm = () => {
     setIncomeFormOpen(true);
   };
+
+  const handleEditIncome = (income: Income) => {
+    setEditingIncome(income);
+    setIncomeFormOpen(true);
+  };
+
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -89,6 +96,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
         show={isIncomeFormOpen}
         onClose={() => setIncomeFormOpen(false)}
         onSubmit={handleIncomeFormSubmit}
+        income={editingIncome}
       />
 
       {/* Income Table */}
@@ -117,6 +125,9 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.category}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">${income.amount.toFixed(2)}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.notes}</td>
+                <td>
+                  <button onClick={() => handleEditIncome(income)}>Edit</button>
+                </td>
               </tr>
             ))}
           </tbody>
