@@ -55,29 +55,43 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
     }
   }, [selectedMonth, userId]);
 
-  const handleIncomeFormSubmit = async (date: string, amount: number, category: string, notes: string) => {
-    if (!userId) {
-      console.error('User ID is not available');
-      return;
+  const handleIncomeFormSubmit = async (income: Income) => {
+    // Check if editing an existing income
+    if (editingIncome) {
+      try {
+        const { error } = await supabase
+          .from('incomes')
+          .update({ 
+            amount: income.amount,
+            date: income.date,
+            category: income.category,
+            notes: income.notes
+          })
+          .eq('id', editingIncome.id); // Match the record by ID for update
+  
+        if (error) throw error;
+  
+        setIncomes(incomes.map(item => item.id === editingIncome.id ? income : item));
+        toast.success('Income updated successfully.');
+      } catch (error) {
+        console.error('Error updating income:', error);
+        toast.error('Failed to update income.');
+      }
+    } else {
+      try {
+        const { error } = await supabase.from('incomes').insert([income]);
+  
+        if (error) throw error;
+        setIncomes([...incomes, income]);
+        toast.success('Income added successfully.');
+      } catch (error) {
+        console.error('Error adding income:', error);
+        toast.error('Failed to add income.');
+      }
     }
-
-    const newIncomeData = {
-      user_id: userId,
-      date,
-      amount,
-      category,
-      notes
-    };
-
-    const { error } = await supabase.from('incomes').insert([newIncomeData]);
-
-    if (error) {
-      console.error('Error adding income:', error);
-      toast.error('Failed to add income.');
-      return;
-    }
-
-    toast.success('Income added successfully.');
+  
+    // Reset editing state and close the form
+    setEditingIncome(null);
     setIncomeFormOpen(false);
   };
 
