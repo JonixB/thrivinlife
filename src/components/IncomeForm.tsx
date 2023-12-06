@@ -4,13 +4,24 @@ interface IncomeFormProps {
   show: boolean;
   onClose: () => void;
   onSubmit: (date: string, amount: number, category: string, notes: string) => void;
+  income?: Income | null;
 }
 
-const IncomeForm: React.FC<IncomeFormProps> = ({ show, onClose, onSubmit }) => {
-  const [date, setDate] = useState('');
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('');
-  const [notes, setNotes] = useState('');
+interface Income {
+  id: number;
+  amount: number;
+  date: string;
+  category: string;
+  notes: string;
+}
+
+
+const IncomeForm: React.FC<IncomeFormProps> = ({ show, onClose, onSubmit, income }) => {
+  const [date, setDate] = useState(income ? income.date : '');
+  const [amount, setAmount] = useState(income ? income.amount.toString() : '');
+  const [category, setCategory] = useState(income ? income.category : '');
+  const [notes, setNotes] = useState(income ? income.notes : '');
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
