@@ -3,6 +3,7 @@ import IncomeForm from './IncomeForm';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
+import { FaEdit } from 'react-icons/fa';
 
 interface Income {
   id: number;
@@ -131,6 +132,9 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
               <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Notes
               </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Edit
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white">
@@ -140,8 +144,10 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.category}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">${income.amount.toFixed(2)}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{income.notes}</td>
-                <td>
-                  <button onClick={() => handleEditIncome(income)}>Edit</button>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">
+                  <button onClick={() => handleEditIncome(income)}>
+                    <FaEdit />
+                  </button>
                 </td>
               </tr>
             ))}
