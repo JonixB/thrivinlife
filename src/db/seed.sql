@@ -30,7 +30,9 @@ CREATE TABLE incomes (
   date DATE,
   amount NUMERIC(10, 2),
   category TEXT,
-  notes text
+  notes text,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 CREATE TABLE expenses (
@@ -41,7 +43,9 @@ CREATE TABLE expenses (
   amount NUMERIC(10, 2),
   payment_method TEXT,
   vendor TEXT,
-  notes text
+  notes text,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 -- Seed data
