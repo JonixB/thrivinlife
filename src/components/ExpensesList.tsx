@@ -3,6 +3,7 @@ import ExpenseForm from './ExpenseForm';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
+import { FaEdit } from 'react-icons/fa';
 
 interface Expense {
   id: number;
@@ -18,10 +19,18 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
   const [isExpenseFormOpen, setExpenseFormOpen] = useState(false);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const { userId } = useTaskContext();
+  const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
 
   const handleOpenExpenseForm = () => {
+    setEditingExpense(null);
     setExpenseFormOpen(true);
   };
+
+  const handleEditExpense = (expense: Expense) => {
+    setEditingExpense(expense);
+    setExpenseFormOpen(true);
+  };
+
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -50,32 +59,45 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
     }
   }, [selectedMonth, userId]);
 
-  const handleExpenseFormSubmit = async (date: string, category: string, amount: number, paymentMethod: string, vendor: string, notes: string) => {
-    if (!userId) {
-      console.error('User ID is not available');
-      return;
+  const handleExpenseFormSubmit = async (expense: Expense) => {
+    // Check if editing an existing income
+    if (editingExpense) {
+      try {
+        const { error } = await supabase
+          .from('expenses')
+          .update({
+            amount: expense.amount,
+            date: expense.date,
+            category: expense.category,
+            paymentMethod: expense.paymentMethod,
+            vendor: expense.vendor,
+            notes: expense.notes
+          })
+          .eq('id', editingExpense.id); // Match the record by ID for update
+
+        if (error) throw error;
+
+        setExpenses(expenses.map(item => item.id === editingExpense.id ? expense : item));
+        toast.success('Expense updated successfully.');
+      } catch (error) {
+        console.error('Error updating expense:', error);
+        toast.error('Failed to update expense.');
+      }
+    } else {
+      try {
+        const { error } = await supabase.from('expenses').insert([expense]);
+
+        if (error) throw error;
+        setExpenses([...expenses, expense]);
+        toast.success('Expense added successfully.');
+      } catch (error) {
+        console.error('Error adding expense:', error);
+        toast.error('Failed to add expense.');
+      }
     }
 
-    const newExpenseData = {
-      user_id: userId,
-      date,
-      category,
-      amount,
-      payment_method: paymentMethod,
-      vendor,
-      notes
-    };
-
-    const { error } = await supabase.from('expenses').insert([newExpenseData]);
-
-    if (error) {
-      console.error('Error adding expense:', error);
-      toast.error('Failed to add expense.');
-      return;
-    }
-
-    toast.success('Expense added successfully.');
-    // Update your expenses list here
+    // Reset editing state and close the form
+    setEditingExpense(null);
     setExpenseFormOpen(false);
   };
 
@@ -84,8 +106,8 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
       <h2 className="text-lg font-semibold mb-4">Expenses</h2>
 
       <button
-        className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={() => setExpenseFormOpen(true)}
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        onClick={handleOpenExpenseForm}
       >
         Add Expense
       </button>
@@ -94,6 +116,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
         show={isExpenseFormOpen}
         onClose={() => setExpenseFormOpen(false)}
         onSubmit={handleExpenseFormSubmit}
+        expense={editingExpense}
       />
 
       {/* Expenses Table */}
@@ -119,6 +142,9 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
               <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Notes
               </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Edit
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white">
@@ -130,6 +156,11 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.paymentMethod}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.vendor}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.notes}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">
+                  <button onClick={() => handleEditExpense(expense)}>
+                    <FaEdit />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
