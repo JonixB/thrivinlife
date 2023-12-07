@@ -11,7 +11,7 @@ interface Expense {
   amount: number;
   date: string;
   category: string;
-  paymentMethod: string;
+  payment_method: string;
   vendor: string;
   notes: string;
 }
@@ -95,7 +95,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
             amount: expense.amount,
             date: expense.date,
             category: expense.category,
-            payment_method: expense.paymentMethod,
+            payment_method: expense.payment_method,
             vendor: expense.vendor,
             notes: expense.notes
           })
@@ -111,9 +111,12 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
       }
     } else {
       try {
-        const { error } = await supabase.from('expenses').insert([expense]);
+        const { data, error } = await supabase.from('expenses').insert([{ 
+          ...expense,
+          user_id: userId // Include the user_id
+        }]);
+        console.log(expense)
 
-        if (error) throw error;
         setExpenses([...expenses, expense]);
         toast.success('Expense added successfully.');
       } catch (error) {
@@ -187,7 +190,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.date}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.category}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">${expense.amount.toFixed(2)}</td>
-                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.paymentMethod}</td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.payment_method}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.vendor}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">{expense.notes}</td>
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">
