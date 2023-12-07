@@ -12,7 +12,7 @@ interface Expense {
   amount: number;
   date: string;
   category: string;
-  paymentMethod: string;
+  payment_method: string;
   vendor: string;
   notes: string;
 }
@@ -21,7 +21,7 @@ interface NewExpense {
   amount: number;
   date: string;
   category: string;
-  paymentMethod: string;
+  payment_method: string;
   vendor: string;
   notes: string;
 }
@@ -30,7 +30,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expe
   const [date, setDate] = useState(expense ? expense.date : '');
   const [category, setCategory] = useState(expense ? expense.category : '');
   const [amount, setAmount] = useState(expense ? expense.amount.toString() : '');
-  const [paymentMethod, setPaymentMethod] = useState(expense ? expense.paymentMethod : '');
+  const [payment_method, setPaymentMethod] = useState(expense ? expense.payment_method : '');
   const [vendor, setVendor] = useState(expense ? expense.vendor : '');
   const [notes, setNotes] = useState(expense ? expense.notes : '');
 
@@ -39,7 +39,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expe
       setDate(expense.date);
       setCategory(expense.category)
       setAmount(expense.amount.toString());
-      setPaymentMethod(expense.paymentMethod);
+      setPaymentMethod(expense.payment_method);
       setVendor(expense.vendor)
       setNotes(expense.notes);
     } else {
@@ -63,7 +63,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expe
         date,
         category,
         amount: parseFloat(amount),
-        paymentMethod,
+        payment_method,
         vendor,
         notes
       };
@@ -74,7 +74,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expe
         date,
         category,
         amount: parseFloat(amount),
-        paymentMethod,
+        payment_method,
         vendor,
         notes
       };
@@ -133,7 +133,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expe
                     <input
                       type="text"
                       placeholder="Payment Method"
-                      value={paymentMethod}
+                      value={payment_method}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                       className="w-full p-2 mb-4 border rounded"
                     />
