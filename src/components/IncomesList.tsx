@@ -107,9 +107,11 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
       }
     } else {
       try {
-        const { error } = await supabase.from('incomes').insert([income]);
-
-        if (error) throw error;
+        const { data, error } = await supabase.from('incomes').insert([{ 
+          ...income,
+          user_id: userId // Include the user_id
+        }]);
+        
         setIncomes([...incomes, income]);
         toast.success('Income added successfully.');
       } catch (error) {
