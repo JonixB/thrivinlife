@@ -3,7 +3,8 @@ import IncomeForm from './IncomeForm';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { useTaskContext } from '../hooks/useTaskContext';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import DeleteConfirmation from './DeleteConfirmation';
 
 interface Income {
   id: number;
@@ -18,6 +19,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
   const [incomes, setIncomes] = useState<Income[]>([]);
   const { userId } = useTaskContext();
   const [editingIncome, setEditingIncome] = useState<Income | null>(null);
+  const [incomeToDelete, setIncomeToDelete] = useState<Income | null>(null);
 
   const handleOpenIncomeForm = () => {
     setEditingIncome(null);
@@ -29,6 +31,30 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
     setIncomeFormOpen(true);
   };
 
+  const handleDeleteIncome = (income: Income) => {
+    setIncomeToDelete(income);
+  };
+
+  const confirmDelete = async () => {
+    if (!incomeToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from('incomes')
+        .delete()
+        .match({ id: incomeToDelete.id });
+
+      if (error) throw error;
+
+      setIncomes(incomes.filter(item => item.id !== incomeToDelete.id));
+      toast.success('Income deleted successfully.');
+    } catch (error) {
+      console.error('Error deleting income:', error);
+      toast.error('Failed to delete income.');
+    }
+
+    setIncomeToDelete(null);
+  };
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -117,6 +143,11 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
 
       {/* Income Table */}
       <div className="overflow-x-auto">
+        <DeleteConfirmation
+          show={incomeToDelete != null}
+          onCancel={() => setIncomeToDelete(null)}
+          onConfirm={confirmDelete}
+        />
         <table className="min-w-full table-auto border-collapse bg-white">
           <thead className="bg-gray-100">
             <tr>
@@ -135,6 +166,9 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
               <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Edit
               </th>
+              <th className="px-4 py-2 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Delete
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white">
@@ -147,6 +181,11 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
                 <td className="px-4 py-2 border-b border-gray-200 text-sm">
                   <button onClick={() => handleEditIncome(income)}>
                     <FaEdit />
+                  </button>
+                </td>
+                <td className="px-4 py-2 border-b border-gray-200 text-sm">
+                  <button onClick={() => handleDeleteIncome(income)}>
+                    <FaTrash />
                   </button>
                 </td>
               </tr>
