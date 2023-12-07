@@ -69,7 +69,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
             amount: expense.amount,
             date: expense.date,
             category: expense.category,
-            paymentMethod: expense.paymentMethod,
+            payment_method: expense.paymentMethod,
             vendor: expense.vendor,
             notes: expense.notes
           })
