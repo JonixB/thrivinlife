@@ -1,29 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ExpenseFormProps {
   show: boolean;
   onClose: () => void;
-  onSubmit: (date: string, category: string, amount: number, paymentMethod: string, vendor: string, notes: string) => void;
+  onSubmit: (expense: Expense) => void;
+  expense?: Expense | null
 }
 
-const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit }) => {
-  const [date, setDate] = useState('');
-  const [category, setCategory] = useState('');
-  const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [vendor, setVendor] = useState('');
-  const [notes, setNotes] = useState('');
+interface Expense {
+  id: number;
+  amount: number;
+  date: string;
+  category: string;
+  paymentMethod: string;
+  vendor: string;
+  notes: string;
+}
+
+interface NewExpense {
+  amount: number;
+  date: string;
+  category: string;
+  paymentMethod: string;
+  vendor: string;
+  notes: string;
+}
+
+const ExpenseForm: React.FC<ExpenseFormProps> = ({ show, onClose, onSubmit, expense }) => {
+  const [date, setDate] = useState(expense ? expense.date : '');
+  const [category, setCategory] = useState(expense ? expense.category : '');
+  const [amount, setAmount] = useState(expense ? expense.amount.toString() : '');
+  const [paymentMethod, setPaymentMethod] = useState(expense ? expense.paymentMethod : '');
+  const [vendor, setVendor] = useState(expense ? expense.vendor : '');
+  const [notes, setNotes] = useState(expense ? expense.notes : '');
+
+  useEffect(() => {
+    if (expense) {
+      setDate(expense.date);
+      setCategory(expense.category)
+      setAmount(expense.amount.toString());
+      setPaymentMethod(expense.paymentMethod);
+      setVendor(expense.vendor)
+      setNotes(expense.notes);
+    } else {
+      // Reset form fields
+      setDate('');
+      setCategory('');
+      setAmount('');
+      setPaymentMethod('');
+      setVendor('');
+      setNotes('');
+    }
+  }, [expense]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(date, category, parseFloat(amount), paymentMethod, vendor, notes);
+
+    const isEditing = expense && expense.id !== undefined;
+    if (isEditing) {
+      const updatedExpense: Expense = {
+        id: expense.id,
+        date,
+        category,
+        amount: parseFloat(amount),
+        paymentMethod,
+        vendor,
+        notes
+      };
+      onSubmit(updatedExpense);
+    } else {
+      // New income: No id
+      const NewExpense: NewExpense = {
+        date,
+        category,
+        amount: parseFloat(amount),
+        paymentMethod,
+        vendor,
+        notes
+      };
+      onSubmit(NewExpense as Expense);
+    }
+
+    // Reset form fields
     setDate('');
     setCategory('');
     setAmount('');
     setPaymentMethod('');
     setVendor('');
     setNotes('');
-    onClose();
   };
 
   if (!show) return null;
