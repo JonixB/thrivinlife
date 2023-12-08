@@ -33,8 +33,8 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
     setExpenseFormOpen(true);
   };
 
-  const handleDeleteExpense = (income: Expense) => {
-    setExpenseToDelete(income);
+  const handleDeleteExpense = (expense: Expense) => {
+    setExpenseToDelete(expense);
   };
 
   const confirmDelete = async () => {
@@ -42,7 +42,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
 
     try {
       const { error } = await supabase
-        .from('incomes')
+        .from('expenses')
         .delete()
         .match({ id: expenseToDelete.id });
 
