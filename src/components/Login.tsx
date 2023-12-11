@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 
@@ -9,6 +10,7 @@ const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const navigate = useNavigate();
 
   const handleSignUp = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
@@ -21,6 +23,7 @@ const Login: React.FC = () => {
     }
     if (data) {
       toast.success('Successfully signed up!');
+      navigate('/profile-setup');
     }
   }
 
