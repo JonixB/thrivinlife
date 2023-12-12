@@ -11,6 +11,7 @@ import Sidebar from './components/Sidebar';
 import Filter from './components/Filter';
 import { TaskProvider } from './context/TaskContext';
 import MainContent from './components/MainContent';
+import ProfileSetup from './components/ProfileSetup';
 
 
 
@@ -71,6 +72,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="/profile-setup" element={<ProfileSetup user={user} />} />
             </Routes>
           )}
         </div>
