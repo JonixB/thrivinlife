@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import TaskBody from './components/TaskBody';
 import Login from './components/Login';
 import { supabase } from './lib/helper/supabase';
 import { Session } from '@supabase/supabase-js';
 import { ToastContainer } from 'react-toastify';
-import Sidebar from './components/Sidebar';
-import Filter from './components/Filter';
-import { TaskProvider } from './context/TaskContext';
 import MainContent from './components/MainContent';
 import ProfileSetup from './components/ProfileSetup';
 
