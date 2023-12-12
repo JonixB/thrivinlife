@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
+import { User } from '@supabase/supabase-js';
 
 
 const Login: React.FC = () => {
@@ -39,10 +40,25 @@ const Login: React.FC = () => {
       return;
     }
     if (data) {
-      toast.success('Successfully logged in!');
-      setErrorMessage(null); 
+      checkAndRedirect(data.session.user);
     }
   }
+
+  const checkAndRedirect = async (user: User) => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (error || !data) {
+      // Redirect to profile setup if no profile data is found
+      navigate('/profile-setup');
+    } else {
+      // Redirect to main content or other pages
+      navigate('/');
+    }
+  };
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
