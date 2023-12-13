@@ -14,6 +14,7 @@ import ProfileSetup from './components/ProfileSetup';
 function App() {
   const [user, setUser] = useState<Session | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [isProfileComplete, setIsProfileComplete] = useState<boolean>(false);
 
   const fetchAvatarUrl = async (userId: string) => {
     if (userId) {
@@ -31,6 +32,20 @@ function App() {
     }
   };
 
+  const checkProfileCompletion = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('first_name, last_name, profile_image, date_of_birth')
+      .eq('user_id', userId)
+      .single();
+
+    if (data && data.first_name && data.last_name && data.profile_image && data.date_of_birth) {
+      setIsProfileComplete(true);
+    } else {
+      setIsProfileComplete(false);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -39,19 +54,21 @@ function App() {
       }
     };
     fetchUser();
-
+  
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event);
         if (session) {
           setUser(session);
           fetchAvatarUrl(session.user.id);
+          checkProfileCompletion(session.user.id);
         } else {
           setUser(null);
+          setIsProfileComplete(false);
         }
       }
     );
-
+  
     return () => {
       authListener.subscription.unsubscribe();
     };
@@ -62,8 +79,10 @@ function App() {
       <div className="App flex flex-col h-screen max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
         <div className="flex flex-1 overflow-hidden">
-          {user ? (
+          {user && isProfileComplete ? (
             <MainContent user={user} avatarUrl={avatarUrl} />
+          ) : user ? (
+            <Navigate to="/profile-setup" />
           ) : (
             <Routes>
               <Route path="/login" element={<Login />} />
