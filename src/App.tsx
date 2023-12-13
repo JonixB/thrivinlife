@@ -54,7 +54,7 @@ function App() {
       }
     };
     fetchUser();
-  
+
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event);
@@ -68,7 +68,7 @@ function App() {
         }
       }
     );
-  
+
     return () => {
       authListener.subscription.unsubscribe();
     };
@@ -79,17 +79,23 @@ function App() {
       <div className="App flex flex-col h-screen max-w-screen-xl mx-auto">
         {user && <Navbar avatarUrl={avatarUrl} />}
         <div className="flex flex-1 overflow-hidden">
-          {user && isProfileComplete ? (
-            <MainContent user={user} avatarUrl={avatarUrl} />
-          ) : user ? (
-            <Navigate to="/profile-setup" />
-          ) : (
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/login" />} />
-              <Route path="/profile-setup" element={<ProfileSetup user={user} />} />
-            </Routes>
-          )}
+          <Routes>
+            {user ? (
+              <>
+                {isProfileComplete ? (
+                  <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl} />} />
+                ) : (
+                  <Route path="/profile-setup" element={<ProfileSetup user={user.user} />} />
+                )}
+                <Route path="*" element={<Navigate to={isProfileComplete ? "/" : "/profile-setup"} />} />
+              </>
+            ) : (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+              </>
+            )}
+          </Routes>
         </div>
         <Footer />
         <ToastContainer position="top-right" />
