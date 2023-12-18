@@ -44,7 +44,7 @@ const ProfileSetup: React.FC<ProfileSetupProps> = ({ user }) => {
       console.error(error);
     } else {
       toast.success('Profile updated successfully');
-      navigate('/');
+      navigate('/tasks');
     }
   };
 
