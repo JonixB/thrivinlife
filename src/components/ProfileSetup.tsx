@@ -15,7 +15,7 @@ interface ProfileInfo {
   date_of_birth: string;
 }
 
-const ProfileSetup: React.FC<ProfileSetupProps> = ({ user }) => {
+const ProfileSetup: React.FC<ProfileSetupProps & { setIsProfileComplete: (isComplete: boolean) => void }> = ({ user, setIsProfileComplete }) => {
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     first_name: '',
     last_name: '',
@@ -44,6 +44,7 @@ const ProfileSetup: React.FC<ProfileSetupProps> = ({ user }) => {
       console.error(error);
     } else {
       toast.success('Profile updated successfully');
+      setIsProfileComplete(true);
       navigate('/');
     }
   };

@@ -85,7 +85,7 @@ function App() {
                 {isProfileComplete ? (
                   <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl} />} />
                 ) : (
-                  <Route path="/profile-setup" element={<ProfileSetup user={user.user} />} />
+                  <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} />} />
                 )}
                 <Route path="*" element={<Navigate to={isProfileComplete ? "/" : "/profile-setup"} />} />
               </>
