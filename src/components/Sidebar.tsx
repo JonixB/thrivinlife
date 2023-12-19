@@ -78,14 +78,13 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
           <span className="font-medium">Health</span>
         </li>
       </ul>
-      <div className="mt-auto">
-        <button
-          onClick={() => setShowLogoutOptions(!showLogoutOptions)}
-          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
-        >
-          <FaArrowCircleLeft className="mr-3" />
-          <span className="font-medium">Options</span>
-        </button>
+      <div
+        onMouseEnter={() => setShowLogoutOptions(true)}
+        onMouseLeave={() => setShowLogoutOptions(false)}
+        className="relative mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
+      >
+        <FaArrowCircleLeft className="mr-3" />
+        <span className="font-medium">Options</span>
         {showLogoutOptions && (
           <div className="bg-white shadow-lg rounded-lg mt-2 p-2 absolute">
             <ul>
