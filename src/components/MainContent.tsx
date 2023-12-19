@@ -11,9 +11,10 @@ import Sidebar from './Sidebar';
 interface MainContentProps {
   user: Session | null;
   avatarUrl: string | null;
+  firstName: string | null;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl }) => {
+const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName }) => {
   const location = useLocation();
 
   if (!user) return null;
@@ -21,7 +22,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl }) => {
   return (
     <>
       <TaskProvider userId={user.user.id}>
-        <Sidebar avatarUrl={avatarUrl} userName={user.user.email} />
+        <Sidebar avatarUrl={avatarUrl} firstName={firstName} />
         <div className="flex-grow bg-gray-100 p-6 overflow-auto">
           <Routes>
             <Route path="/login" element={<Navigate to="/tasks" />} />
