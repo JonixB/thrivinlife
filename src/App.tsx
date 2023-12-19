@@ -15,20 +15,23 @@ function App() {
   const [user, setUser] = useState<Session | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isProfileComplete, setIsProfileComplete] = useState<boolean>(false);
+  const [firstName, setFirstName] = useState<string>('');
 
-  const fetchAvatarUrl = async (userId: string) => {
+  const fetchUserProfile = async (userId: string) => {
     if (userId) {
       const { data, error } = await supabase
         .from('profiles')
-        .select('profile_image')
+        .select('*') // Fetch all columns
         .eq('user_id', userId)
         .single();
 
       if (error) {
-        console.error('Error fetching avatar URL:', error);
+        console.error('Error fetching user profile:', error);
         return;
       }
+
       setAvatarUrl(data?.profile_image || null);
+      setFirstName(data?.first_name || '');
     }
   };
 
@@ -60,7 +63,7 @@ function App() {
         console.log('Auth state changed:', event);
         if (session) {
           setUser(session);
-          fetchAvatarUrl(session.user.id);
+          fetchUserProfile(session.user.id);
           checkProfileCompletion(session.user.id);
         } else {
           setUser(null);
@@ -83,7 +86,7 @@ function App() {
             {user ? (
               <>
                 {isProfileComplete ? (
-                  <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl} />} />
+                  <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl} firstName={firstName} />} />
                 ) : (
                   <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} />} />
                 )}
