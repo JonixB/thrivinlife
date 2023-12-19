@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   avatarUrl: string | null;
-  userName: string | undefined;
+  firstName: string | null;
 }
 
-const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
+const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
   const [activeItem, setActiveItem] = useState<string>('DailyTasks');
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, userName }) => {
           />
         </div>
         <div className="flex flex-col justify-center ml-4">
-          <div className="text-lg font-bold text-gray-900">{userName}</div>
+          <div className="text-lg font-bold text-gray-900">{firstName}</div>
           <div className="text-sm text-gray-500">Welcome Back!</div>
         </div>
       </div>
