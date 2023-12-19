@@ -13,6 +13,7 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
   const [activeItem, setActiveItem] = useState<string>('DailyTasks');
+  const [showLogoutOptions, setShowLogoutOptions] = useState(false);
   const navigate = useNavigate();
 
   const handleItemClick = (item: string) => {
@@ -77,13 +78,33 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
           <span className="font-medium">Health</span>
         </li>
       </ul>
-      <button
-        onClick={handleLogout}
-        className="mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
-      >
-        <FaArrowCircleLeft className="mr-3" />
-        <span className="font-medium">Sign out</span>
-      </button>
+      <div className="mt-auto">
+        <button
+          onClick={() => setShowLogoutOptions(!showLogoutOptions)}
+          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
+        >
+          <FaArrowCircleLeft className="mr-3" />
+          <span className="font-medium">Options</span>
+        </button>
+        {showLogoutOptions && (
+          <div className="bg-white shadow-lg rounded-lg mt-2 p-2 absolute">
+            <ul>
+              <li
+                className="cursor-pointer hover:bg-gray-100 p-2"
+                onClick={() => navigate('/profile-settings')}
+              >
+                Profile Settings
+              </li>
+              <li
+                className="cursor-pointer hover:bg-gray-100 p-2"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
