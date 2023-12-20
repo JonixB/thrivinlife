@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaTasks, FaWallet } from 'react-icons/fa';
 import { MdFitnessCenter } from 'react-icons/md';
-import { FaArrowCircleLeft } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { supabase } from '../lib/helper/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -85,7 +85,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
           className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
         >
           <div className="flex items-center">
-            <FaArrowCircleLeft className="mr-3" />
+            <FaBars className="mr-3" />
             <span className="font-medium">Options</span>
           </div>
 
