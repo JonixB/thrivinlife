@@ -78,24 +78,26 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
           <span className="font-medium">Health</span>
         </li>
       </ul>
-      <div
-        onMouseEnter={() => setShowLogoutOptions(true)}
-        onMouseLeave={() => setShowLogoutOptions(false)}
-        className="relative mt-auto flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
-      >
-        <FaArrowCircleLeft className="mr-3" />
-        <span className="font-medium">Options</span>
+      <div className="relative mt-auto">
+        <div
+          onMouseEnter={() => setShowLogoutOptions(true)}
+          onMouseLeave={() => setShowLogoutOptions(false)}
+          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
+        >
+          <FaArrowCircleLeft className="mr-3" />
+          <span className="font-medium">Options</span>
+        </div>
         {showLogoutOptions && (
-          <div className="bg-white shadow-lg rounded-lg mt-2 p-2 absolute">
-            <ul>
+          <div className="bg-white shadow-md rounded-md absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 py-2 w-48">
+            <ul className="text-sm">
               <li
-                className="cursor-pointer hover:bg-gray-100 p-2"
+                className="cursor-pointer hover:bg-gray-100 px-4 py-2"
                 onClick={() => navigate('/profile-settings')}
               >
                 Profile Settings
               </li>
               <li
-                className="cursor-pointer hover:bg-gray-100 p-2"
+                className="cursor-pointer hover:bg-gray-100 px-4 py-2"
                 onClick={handleLogout}
               >
                 Logout
