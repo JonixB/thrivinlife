@@ -82,29 +82,32 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
         <div
           onMouseEnter={() => setShowLogoutOptions(true)}
           onMouseLeave={() => setShowLogoutOptions(false)}
-          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
+          className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer"
         >
-          <FaArrowCircleLeft className="mr-3" />
-          <span className="font-medium">Options</span>
-        </div>
-        {showLogoutOptions && (
-          <div className="bg-white shadow-md rounded-md absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 py-2 w-48">
-            <ul className="text-sm">
-              <li
-                className="cursor-pointer hover:bg-gray-100 px-4 py-2"
-                onClick={() => navigate('/profile-settings')}
-              >
-                Profile Settings
-              </li>
-              <li
-                className="cursor-pointer hover:bg-gray-100 px-4 py-2"
-                onClick={handleLogout}
-              >
-                Logout
-              </li>
-            </ul>
+          <div className="flex items-center">
+            <FaArrowCircleLeft className="mr-3" />
+            <span className="font-medium">Options</span>
           </div>
-        )}
+
+          {showLogoutOptions && (
+            <div className="bg-white shadow-md rounded-md absolute bottom-full left-1/2 py-2 w-48" style={{ transform: 'translateX(-50%)' }}>
+              <ul className="text-sm">
+                <li
+                  className="cursor-pointer hover:bg-gray-100 px-4 py-2"
+                  onClick={() => navigate('/profile-settings')}
+                >
+                  Profile Settings
+                </li>
+                <li
+                  className="cursor-pointer hover:bg-gray-100 px-4 py-2"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
