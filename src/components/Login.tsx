@@ -22,8 +22,8 @@ const Login: React.FC = () => {
       console.error(error.message);
     }
     if (data) {
-      toast.success('Successfully signed up!');
-      navigate('/profile-setup');
+      toast.info('Please check your email to verify your account!');
+      navigate('/confirmation');
     }
   }
 
