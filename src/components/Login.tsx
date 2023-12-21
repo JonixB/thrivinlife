@@ -15,20 +15,52 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleSignUp = async (username: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: username,
-      password: password,
-    });
+  const handleSignUp = async (
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string
+  ) => {
+    try {
+      // Step 1: Register the user
+      let signUpResponse = await supabase.auth.signUp({
+        email: username,
+        password: password,
+      });
 
-    if (error) {
-      console.error(error.message);
-    }
-    if (data) {
+      let user = (signUpResponse as any).user;
+      let signUpError = signUpResponse.error;
+
+      if (signUpError) throw signUpError;
+      if (!user) throw new Error("User not defined after signUp");
+
+      // Step 2: Insert the additional information into the profiles table
+      const { data, error: insertError } = await supabase
+        .from('profiles')
+        .insert([
+          {
+            user_id: user.id,
+            first_name: firstName,
+            last_name: lastName,
+            date_of_birth: dateOfBirth,
+          },
+        ]);
+
+      if (insertError) throw insertError;
+
       toast.success('Successfully signed up!');
       navigate('/profile-setup');
+    } catch (error) {
+      if (typeof error === 'string') {
+        console.error('Signup error:', error);
+        toast.error(error);
+      } else if (error instanceof Error) {
+        console.error('Signup error:', error.message);
+        toast.error(error.message);
+      }
     }
-  }
+  };
 
   const handleSignIn = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -119,7 +151,7 @@ const Login: React.FC = () => {
           )}
           <div className="mb-4">
             <button
-              onClick={() => isSignUp ? handleSignUp(username, password) : handleSignIn(username, password)}
+              onClick={() => isSignUp ? handleSignUp(username, password, firstName, lastName, dateOfBirth) : handleSignIn(username, password)}
               className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none"
             >
               {isSignUp ? 'Sign Up' : 'Sign In'}
