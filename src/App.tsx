@@ -8,6 +8,7 @@ import { Session } from '@supabase/supabase-js';
 import { ToastContainer } from 'react-toastify';
 import MainContent from './components/MainContent';
 import ProfileSetup from './components/ProfileSetup';
+import ConfirmationPage from './components/ConfirmationPage';
 
 
 
@@ -95,6 +96,7 @@ function App() {
             ) : (
               <>
                 <Route path="/login" element={<Login />} />
+                <Route path="/confirmation" element={<ConfirmationPage />} />
                 <Route path="*" element={<Navigate to="/login" />} />
               </>
             )}
