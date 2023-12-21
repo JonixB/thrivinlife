@@ -7,12 +7,18 @@ import { toast } from 'react-toastify';
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const handleSignUp = async (username: string, password: string) => {
+  const handleSignUp = async (username: string, password: string, confirmPassword: string) => {
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match!');
+      return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: username,
       password: password,
@@ -76,11 +82,24 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 border rounded-md"
             />
-            {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
           </div>
+          {isSignUp && (
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-2" htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-3 border rounded-md"
+              />
+            </div>
+          )}
+          {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
           <div className="mb-4">
             <button
-              onClick={() => isSignUp ? handleSignUp(username, password) : handleSignIn(username, password)}
+              onClick={() => isSignUp ? handleSignUp(username, password, confirmPassword) : handleSignIn(username, password)}
               className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none"
             >
               {isSignUp ? 'Sign Up' : 'Sign In'}
