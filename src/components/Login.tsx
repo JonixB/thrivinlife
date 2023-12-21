@@ -7,67 +7,32 @@ import { toast } from 'react-toastify';
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [dateOfBirth, setDateOfBirth] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const handleSignUp = async (
-    username: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    dateOfBirth: string
-  ) => {
-    try {
-      // Step 1: Register the user
-      let signUpResponse = await supabase.auth.signUp({
-        email: username,
-        password: password,
-      });
+  const handleSignUp = async (username: string, password: string) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: username,
+      password: password,
+    });
 
-      let user = (signUpResponse as any).user;
-      let signUpError = signUpResponse.error;
-
-      if (signUpError) throw signUpError;
-      if (!user) throw new Error("User not defined after signUp");
-
-      // Step 2: Insert the additional information into the profiles table
-      const { data, error: insertError } = await supabase
-        .from('profiles')
-        .insert([
-          {
-            user_id: user.id,
-            first_name: firstName,
-            last_name: lastName,
-            date_of_birth: dateOfBirth,
-          },
-        ]);
-
-      if (insertError) throw insertError;
-
+    if (error) {
+      console.error(error.message);
+    }
+    if (data) {
       toast.success('Successfully signed up!');
       navigate('/profile-setup');
-    } catch (error) {
-      if (typeof error === 'string') {
-        console.error('Signup error:', error);
-        toast.error(error);
-      } else if (error instanceof Error) {
-        console.error('Signup error:', error.message);
-        toast.error(error.message);
-      }
     }
-  };
+  }
 
   const handleSignIn = async (username: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: username,
       password: password,
     });
-
+  
     if (error) {
       console.error(error.message);
       setErrorMessage('Incorrect username or password.');
@@ -113,45 +78,9 @@ const Login: React.FC = () => {
             />
             {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
           </div>
-          {isSignUp && (
-            <>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2" htmlFor="firstName">First Name</label>
-                <input
-                  id="firstName"
-                  type="text"
-                  placeholder="Enter first name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full p-3 border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2" htmlFor="lastName">Last Name</label>
-                <input
-                  id="lastName"
-                  type="text"
-                  placeholder="Enter last name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="w-full p-3 border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2" htmlFor="dateOfBirth">Date of Birth</label>
-                <input
-                  id="dateOfBirth"
-                  type="date"
-                  value={dateOfBirth}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
-                  className="w-full p-3 border rounded-md"
-                />
-              </div>
-            </>
-          )}
           <div className="mb-4">
             <button
-              onClick={() => isSignUp ? handleSignUp(username, password, firstName, lastName, dateOfBirth) : handleSignIn(username, password)}
+              onClick={() => isSignUp ? handleSignUp(username, password) : handleSignIn(username, password)}
               className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none"
             >
               {isSignUp ? 'Sign Up' : 'Sign In'}
