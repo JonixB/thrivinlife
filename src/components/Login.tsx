@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [dateOfBirth, setDateOfBirth] = useState<string>('');
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -32,7 +35,7 @@ const Login: React.FC = () => {
       email: username,
       password: password,
     });
-  
+
     if (error) {
       console.error(error.message);
       setErrorMessage('Incorrect username or password.');
@@ -78,6 +81,42 @@ const Login: React.FC = () => {
             />
             {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
           </div>
+          {isSignUp && (
+            <>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2" htmlFor="firstName">First Name</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  placeholder="Enter first name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full p-3 border rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2" htmlFor="lastName">Last Name</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  placeholder="Enter last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-full p-3 border rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2" htmlFor="dateOfBirth">Date of Birth</label>
+                <input
+                  id="dateOfBirth"
+                  type="date"
+                  value={dateOfBirth}
+                  onChange={(e) => setDateOfBirth(e.target.value)}
+                  className="w-full p-3 border rounded-md"
+                />
+              </div>
+            </>
+          )}
           <div className="mb-4">
             <button
               onClick={() => isSignUp ? handleSignUp(username, password) : handleSignIn(username, password)}
