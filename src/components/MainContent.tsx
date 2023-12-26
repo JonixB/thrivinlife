@@ -7,6 +7,7 @@ import BudgetingComps from './BudgetingComps';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Session } from '@supabase/supabase-js';
 import Sidebar from './Sidebar';
+import ProfilePage from './ProfilePage';
 
 interface MainContentProps {
   user: Session | null;
@@ -29,6 +30,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName })
             <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
             <Route path="*" element={<Navigate to="/tasks" />} />
             <Route path="/budgeting" element={<BudgetingComps />} />
+            <Route path="/profile" element={user ? <ProfilePage user={user.user} /> : <Navigate to="/login" />} />
           </Routes>
         </div>
         {location.pathname !== '/budgeting' && <Filter />}
