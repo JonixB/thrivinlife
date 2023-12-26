@@ -33,7 +33,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName })
             <Route path="/profile" element={user ? <ProfilePage user={user.user} /> : <Navigate to="/login" />} />
           </Routes>
         </div>
-        {location.pathname !== '/budgeting' && <Filter />}
+        {location.pathname === '/tasks' && <Filter />}
       </TaskProvider>
     </>
   );
