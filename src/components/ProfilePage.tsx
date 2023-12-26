@@ -73,16 +73,17 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <div className="flex items-center justify-center p-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl font-semibold mb-4">Edit Profile</h2>
-        <div>
+    <div className="flex items-center justify-center bg-gray-100 p-6">
+      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+        <h2 className="text-2xl font-semibold text-center mb-6">Edit Profile</h2>
+        <div className="space-y-4">
           <input
             type="text"
             name="firstName"
             placeholder="First Name"
             value={profile.firstName}
             onChange={handleInputChange}
+            className="w-full p-2 border rounded-md"
           />
           <input
             type="text"
@@ -90,6 +91,7 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
             placeholder="Last Name"
             value={profile.lastName}
             onChange={handleInputChange}
+            className="w-full p-2 border rounded-md"
           />
           <input
             type="text"
@@ -97,14 +99,21 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
             placeholder="Profile Image URL"
             value={profile.profileImage}
             onChange={handleInputChange}
+            className="w-full p-2 border rounded-md"
           />
           <input
             type="date"
             name="dateOfBirth"
             value={profile.dateOfBirth}
             onChange={handleInputChange}
+            className="w-full p-2 border rounded-md"
           />
-          <button onClick={handleSaveProfile}>Save</button>
+          <button
+            onClick={handleSaveProfile}
+            className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>
