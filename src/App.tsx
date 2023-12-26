@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import MainContent from './components/MainContent';
 import ProfileSetup from './components/ProfileSetup';
 import ConfirmationPage from './components/ConfirmationPage';
+import ProfilePage from './components/ProfilePage';
 
 
 
@@ -92,6 +93,7 @@ function App() {
                   <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} />} />
                 )}
                 <Route path="*" element={<Navigate to={isProfileComplete ? "/" : "/profile-setup"} />} />
+                <Route path="/profile" element={user ? <ProfilePage user={user.user} /> : <Navigate to="/login" />} />
               </>
             ) : (
               <>
