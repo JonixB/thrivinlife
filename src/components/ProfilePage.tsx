@@ -73,48 +73,78 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 p-6">
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-semibold text-center mb-6">Edit Profile</h2>
-        <div className="space-y-4">
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={profile.firstName}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={profile.lastName}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="text"
-            name="profileImage"
-            placeholder="Profile Image URL"
-            value={profile.profileImage}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="date"
-            name="dateOfBirth"
-            value={profile.dateOfBirth}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded-md"
-          />
-          <button
-            onClick={handleSaveProfile}
-            className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Save
-          </button>
+    <div className="flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Edit Your Profile</h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Update your personal information here.
+          </p>
         </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSaveProfile}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="firstName" className="sr-only">First Name</label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="First Name"
+                value={profile.firstName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName" className="sr-only">Last Name</label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Last Name"
+                value={profile.lastName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="profileImage" className="sr-only">Profile Image URL</label>
+              <input
+                id="profileImage"
+                name="profileImage"
+                type="text"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Profile Image URL"
+                value={profile.profileImage}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="dateOfBirth" className="sr-only">Date of Birth</label>
+              <input
+                id="dateOfBirth"
+                name="dateOfBirth"
+                type="date"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                value={profile.dateOfBirth}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
