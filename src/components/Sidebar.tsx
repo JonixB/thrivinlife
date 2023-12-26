@@ -94,7 +94,7 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
               <ul className="text-sm">
                 <li
                   className="cursor-pointer hover:bg-gray-100 px-4 py-2"
-                  onClick={() => navigate('/profile-settings')}
+                  onClick={() => navigate('/profile')}
                 >
                   Profile Settings
                 </li>
