@@ -22,6 +22,8 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     dateOfBirth: '',
   });
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   useEffect(() => {
     if (user) {
       fetchProfile();
