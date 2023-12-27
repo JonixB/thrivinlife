@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { User } from '@supabase/supabase-js';
