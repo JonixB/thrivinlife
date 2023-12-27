@@ -24,6 +24,31 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      return filePath;
+    } catch (error) {
+      toast.error('Failed to upload image');
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (user) {
       fetchProfile();
