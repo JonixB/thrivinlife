@@ -94,10 +94,13 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   const handleSaveProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let imagePath = profile.profileImage;
+
     if (imageFile) {
       const filePath = await uploadImage(imageFile);
       if (filePath) {
-        profile.profileImage = filePath;
+        imagePath = filePath;
+        await fetchProfileImage(filePath);
       }
     }
 
@@ -107,7 +110,7 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
         user_id: user.id,
         first_name: profile.firstName,
         last_name: profile.lastName,
-        profile_image: profile.profileImage,
+        profile_image: imagePath,
         date_of_birth: profile.dateOfBirth,
       });
 
