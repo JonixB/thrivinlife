@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { User } from '@supabase/supabase-js';
@@ -80,7 +80,9 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     setProfile({ ...profile, [name]: value });
   };
 
-  const handleSaveProfile = async () => {
+  const handleSaveProfile = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (imageFile) {
       const filePath = await uploadImage(imageFile);
       if (filePath) {
