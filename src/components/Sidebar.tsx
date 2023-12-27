@@ -16,6 +16,10 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
   const [showLogoutOptions, setShowLogoutOptions] = useState(false);
   const navigate = useNavigate();
 
+  const getInitials = (name: string) => {
+    return name.charAt(0).toUpperCase();
+  };
+
   const handleItemClick = (item: string) => {
     setActiveItem(item);
     if (item === 'Budgeting') {
@@ -38,15 +42,19 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
   return (
     <div className="flex flex-col w-60 bg-white text-gray-800 pr-4 p-6 z-20">
       <div className="flex items-center mb-6">
-        <div className="shrink-0">
+        {avatarUrl ? (
           <img
             className="rounded-full border-2 border-blue-500 p-1"
-            src={avatarUrl || 'default-avatar-url'}
+            src={avatarUrl}
             alt="User Avatar"
             width="50"
             height="50"
           />
-        </div>
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-semibold">
+            {firstName && getInitials(firstName)}
+          </div>
+        )}
         <div className="flex flex-col justify-center ml-4">
           <div className="text-lg font-bold text-gray-900">{firstName}</div>
           <div className="text-sm text-gray-500">Welcome Back!</div>
