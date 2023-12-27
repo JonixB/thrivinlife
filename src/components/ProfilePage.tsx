@@ -148,13 +148,10 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
             <div>
               <label htmlFor="profileImage" className="sr-only">Profile Image URL</label>
               <input
-                id="profileImage"
-                name="profileImage"
-                type="text"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Profile Image URL"
-                value={profile.profileImage}
-                onChange={handleInputChange}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="mb-4"
               />
             </div>
             <div>
