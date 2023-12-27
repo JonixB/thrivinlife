@@ -81,6 +81,13 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   };
 
   const handleSaveProfile = async () => {
+    if (imageFile) {
+      const filePath = await uploadImage(imageFile);
+      if (filePath) {
+        profile.profileImage = filePath;
+      }
+    }
+
     const { error } = await supabase
       .from('profiles')
       .upsert({
