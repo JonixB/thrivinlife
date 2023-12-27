@@ -49,6 +49,17 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     }
   };
 
+  const fetchProfileImage = async (path: string) => {
+    const { publicURL, error } = supabase.storage.from('avatars').getPublicUrl(path);
+
+    if (error) {
+      toast.error('Error fetching profile image URL');
+      console.error(error);
+    } else {
+      setProfile({ ...profile, profileImage: publicURL || '' });
+    }
+  };
+
   useEffect(() => {
     if (user) {
       fetchProfile();
