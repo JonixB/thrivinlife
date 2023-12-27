@@ -44,11 +44,9 @@ const Sidebar: React.FC<Props> = ({ avatarUrl, firstName }) => {
       <div className="flex items-center mb-6">
         {avatarUrl ? (
           <img
-            className="rounded-full border-2 border-blue-500 p-1"
+            className="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
             src={avatarUrl}
             alt="User Avatar"
-            width="50"
-            height="50"
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-semibold">
