@@ -11,7 +11,6 @@ interface ProfileSetupProps {
 interface ProfileInfo {
   first_name: string;
   last_name: string;
-  profile_image: string;
   date_of_birth: string;
 }
 
@@ -19,7 +18,6 @@ const ProfileSetup: React.FC<ProfileSetupProps & { setIsProfileComplete: (isComp
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     first_name: '',
     last_name: '',
-    profile_image: '',
     date_of_birth: '',
   });
 
@@ -70,14 +68,6 @@ const ProfileSetup: React.FC<ProfileSetupProps & { setIsProfileComplete: (isComp
             name="last_name"
             placeholder="Last Name"
             value={profileInfo.last_name}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="text"
-            name="profile_image"
-            placeholder="Profile Image URL"
-            value={profileInfo.profile_image}
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
           />
