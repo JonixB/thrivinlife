@@ -38,11 +38,11 @@ function App() {
   const checkProfileCompletion = async (userId: string) => {
     const { data, error } = await supabase
       .from('profiles')
-      .select('first_name, last_name, profile_image, date_of_birth')
+      .select('first_name, last_name, date_of_birth')
       .eq('user_id', userId)
       .single();
 
-    if (data && data.first_name && data.last_name && data.profile_image && data.date_of_birth) {
+    if (data && data.first_name && data.last_name && data.date_of_birth) {
       setIsProfileComplete(true);
     } else {
       setIsProfileComplete(false);
