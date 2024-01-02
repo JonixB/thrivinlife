@@ -50,11 +50,27 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   };
 
   const fetchProfileImage = async (path: string) => {
-    const response = supabase.storage.from('avatars').getPublicUrl(path);
+    const response = await supabase.storage.from('avatars').getPublicUrl(path);
     const publicUrl = response.data?.publicUrl;
 
     if (publicUrl) {
-      setProfile({ ...profile, profileImage: publicUrl });
+      const imagePath = path;
+      setProfile({ ...profile, profileImage: imagePath });
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: user.id,
+          profile_image: imagePath,
+        });
+
+      if (error) {
+        toast.error('Error saving profile image to the database');
+        console.error(error);
+      } else {
+        toast.success('Profile image updated successfully');
+      }
+
     } else {
       toast.error('Error fetching profile image URL');
     }
