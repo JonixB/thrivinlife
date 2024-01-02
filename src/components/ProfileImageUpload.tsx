@@ -32,7 +32,7 @@ const ProfileImageUpload: React.FC<Props> = ({ currentImage, onImageUpload, firs
             className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full object-cover"
           />
         ) : (
-          <div className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-semibold">
+          <div className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full bg-blue-500 flex items-center justify-center text-white text-5xl font-semibold">
             {getInitials(firstName)}
           </div>
         )}
