@@ -23,8 +23,11 @@ const BudgetSummary: React.FC<{
   const { userId } = useTaskContext();
 
   useEffect(() => {
-    const startDate = new Date(parseInt(selectedYear), parseInt(selectedMonth) - 1, 1);
-    const endDate = new Date(parseInt(selectedYear), parseInt(selectedMonth), 0);
+    const year = parseInt(selectedYear);
+    const month = parseInt(selectedMonth) - 1;
+
+    const startDate = new Date(year, month, 1);
+    const endDate = new Date(year, month + 1, 0);
 
     fetchBudgetData(userId, startDate.toISOString(), endDate.toISOString())
       .then(({ totalIncome, totalExpenses }) => {
@@ -93,7 +96,7 @@ const getMonthOptions = () => {
     date.setMonth(i);
     months.push({
       label: date.toLocaleString('default', { month: 'long' }),
-      value: `${date.getFullYear()}-${String(i + 1).padStart(2, '0')}`
+      value: String(i + 1).padStart(2, '0')
     });
   }
   return months;
