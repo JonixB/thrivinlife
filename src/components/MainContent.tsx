@@ -16,7 +16,7 @@ interface MainContentProps {
   updateAvatarUrl: () => Promise<void>;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName }) => {
+const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName, updateAvatarUrl }) => {
   const location = useLocation();
 
   if (!user) return null;
@@ -31,7 +31,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName })
             <Route path="/tasks" element={<TaskBody avatarUrl={avatarUrl} userId={user.user.id} />} />
             <Route path="*" element={<Navigate to="/tasks" />} />
             <Route path="/budgeting" element={<BudgetingComps />} />
-            <Route path="/profile" element={user ? <ProfilePage user={user.user} /> : <Navigate to="/login" />} />
+            <Route path="/profile" element={user ? <ProfilePage user={user.user} updateAvatarUrl={updateAvatarUrl} /> : <Navigate to="/login" />} />
           </Routes>
         </div>
         {location.pathname === '/tasks' && <Filter />}
