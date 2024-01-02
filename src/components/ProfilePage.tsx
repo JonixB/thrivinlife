@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { supabase } from '../lib/helper/supabase';
 import { toast } from 'react-toastify';
 import { User } from '@supabase/supabase-js';
+import ProfileImageUpload from './ProfileImageUpload';
 
 interface ProfileInfo {
   firstName: string;
@@ -22,14 +23,6 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     dateOfBirth: '',
   });
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
-    }
-  };
-
   const uploadImage = async (file: File): Promise<string | null> => {
     try {
       const fileExt = file.name.split('.').pop();
@@ -49,6 +42,13 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     }
   };
 
+  const handleImageUpload = async (file: File) => {
+    const filePath = await uploadImage(file);
+    if (filePath) {
+      await fetchProfileImage(filePath);
+    }
+  };
+
   const fetchProfileImage = async (path: string) => {
     const response = supabase.storage.from('avatars').getPublicUrl(path);
     const publicUrl = response.data?.publicUrl;
@@ -58,7 +58,6 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
     } else {
       toast.error('Error fetching profile image URL');
     }
-    console.log('public URL', publicUrl);
   };
 
   useEffect(() => {
@@ -95,23 +94,12 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
   const handleSaveProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let imagePath = profile.profileImage;
-
-    if (imageFile) {
-      const filePath = await uploadImage(imageFile);
-      if (filePath) {
-        imagePath = filePath;
-        await fetchProfileImage(filePath);
-      }
-    }
-
     const { error } = await supabase
       .from('profiles')
       .upsert({
         user_id: user.id,
         first_name: profile.firstName,
         last_name: profile.lastName,
-        profile_image: imagePath,
         date_of_birth: profile.dateOfBirth,
       });
 
@@ -132,6 +120,7 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
             Update your personal information here.
           </p>
         </div>
+        <ProfileImageUpload currentImage={profile.profileImage ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${profile.profileImage}` : null} onImageUpload={handleImageUpload} />
         <form className="mt-8 space-y-6" onSubmit={handleSaveProfile}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -160,15 +149,6 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
                 placeholder="Last Name"
                 value={profile.lastName}
                 onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="profileImage" className="sr-only">Profile Image URL</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="mb-4"
               />
             </div>
             <div>
