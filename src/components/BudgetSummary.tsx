@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { fetchBudgetData } from '../lib/helper/budgetHelper';
 import { useTaskContext } from '../hooks/useTaskContext';
 
-const BudgetSummary: React.FC<{ selectedMonth: string; setSelectedMonth: React.Dispatch<React.SetStateAction<string>> }> = ({ selectedMonth, setSelectedMonth }) => {
+const BudgetSummary: React.FC<{
+  selectedMonth: string;
+  setSelectedMonth: React.Dispatch<React.SetStateAction<string>>;
+  selectedYear: string;
+  setSelectedYear: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ selectedMonth, setSelectedMonth, selectedYear, setSelectedYear }) => {
+  
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const { userId } = useTaskContext();
 
   useEffect(() => {
-    const startDate = new Date(selectedMonth);
-    const endDate = new Date(selectedMonth);
-    endDate.setMonth(endDate.getMonth() + 1);
-    endDate.setDate(endDate.getDate() - 1);
+    const startDate = new Date(parseInt(selectedYear), parseInt(selectedMonth) - 1, 1);
+    const endDate = new Date(parseInt(selectedYear), parseInt(selectedMonth), 0);
 
     fetchBudgetData(userId, startDate.toISOString(), endDate.toISOString())
       .then(({ totalIncome, totalExpenses }) => {
         setTotalIncome(totalIncome);
         setTotalExpenses(totalExpenses);
       });
-  }, [selectedMonth, userId]);
+  }, [selectedMonth, selectedYear, userId]);
 
   const balance = totalIncome - totalExpenses;
 
@@ -26,19 +30,35 @@ const BudgetSummary: React.FC<{ selectedMonth: string; setSelectedMonth: React.D
     <div className="p-4 mt-4 border-t border-gray-200">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="mb-4 md:mb-0">
-          <label htmlFor="month-select" className="block text-sm font-medium text-gray-700 mb-1">Select Month</label>
-          <select
-            id="month-select"
-            className="block w-full md:w-48 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-          >
-            {getMonthOptions().map((month) => (
-              <option key={month.value} value={month.value}>
-                {month.label}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="month-select" className="block text-sm font-medium text-gray-700 mb-1">
+            Select Month and Year
+          </label>
+          <div className="flex space-x-2">
+            <select
+              id="month-select"
+              className="block w-full md:w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+            >
+              {getMonthOptions().map((month) => (
+                <option key={month.value} value={month.value}>
+                  {month.label}
+                </option>
+              ))}
+            </select>
+            <select
+              id="year-select"
+              className="block w-full md:w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              {getYearOptions().map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="text-center md:text-left">
           <h3 className="text-lg font-semibold text-gray-700">Total Income:</h3>
