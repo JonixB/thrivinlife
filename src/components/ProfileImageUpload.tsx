@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import { FaPencilAlt } from 'react-icons/fa';
 
 interface Props {
   currentImage: string | null;
@@ -38,8 +38,9 @@ const ProfileImageUpload: React.FC<Props> = ({ currentImage, onImageUpload, firs
         )}
         <button
           onClick={() => document.getElementById('imageInput')?.click()}
-          className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          className="absolute bottom-0 right-0 bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-full flex items-center justify-center"
         >
+          <FaPencilAlt className="mr-2" />
           Edit
         </button>
       </div>
