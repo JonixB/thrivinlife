@@ -138,7 +138,7 @@ const ProfilePage: React.FC<Props> = ({ user, updateAvatarUrl }) => {
             Update your personal information here.
           </p>
         </div>
-        <ProfileImageUpload currentImage={profile.profileImage ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${profile.profileImage}` : null} onImageUpload={handleImageUpload} />
+        <ProfileImageUpload currentImage={profile.profileImage ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${profile.profileImage}` : null} onImageUpload={handleImageUpload} firstName={profile.firstName}/>
         <form className="mt-8 space-y-6" onSubmit={handleSaveProfile}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>

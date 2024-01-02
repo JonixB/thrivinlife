@@ -4,10 +4,15 @@ import { toast } from 'react-toastify';
 interface Props {
   currentImage: string | null;
   onImageUpload: (file: File) => void;
+  firstName: string | null;
 }
 
-const ProfileImageUpload: React.FC<Props> = ({ currentImage, onImageUpload }) => {
+const ProfileImageUpload: React.FC<Props> = ({ currentImage, onImageUpload, firstName }) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const getInitials = (name: string | null) => {
+    return name ? name.charAt(0).toUpperCase() : '';
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -20,11 +25,17 @@ const ProfileImageUpload: React.FC<Props> = ({ currentImage, onImageUpload }) =>
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
-        <img
-          src={currentImage || 'path/to/default/avatar.png'}
-          alt="Profile"
-          className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full object-cover"
-        />
+        {currentImage ? (
+          <img
+            src={currentImage}
+            alt="Profile"
+            className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full object-cover"
+          />
+        ) : (
+          <div className="h-24 w-24 md:h-32 md:w-32 lg:h-40 lg:w-40 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-semibold">
+            {getInitials(firstName)}
+          </div>
+        )}
         <button
           onClick={() => document.getElementById('imageInput')?.click()}
           className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
