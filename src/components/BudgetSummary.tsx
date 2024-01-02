@@ -8,7 +8,16 @@ const BudgetSummary: React.FC<{
   selectedYear: string;
   setSelectedYear: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ selectedMonth, setSelectedMonth, selectedYear, setSelectedYear }) => {
-  
+
+  const getYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let i = currentYear - 10; i <= currentYear + 10; i++) {
+      years.push(i.toString());
+    }
+    return years;
+  };
+
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const { userId } = useTaskContext();
@@ -88,11 +97,6 @@ const getMonthOptions = () => {
     });
   }
   return months;
-};
-
-const getCurrentMonth = () => {
-  const date = new Date();
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 };
 
 export default BudgetSummary;
