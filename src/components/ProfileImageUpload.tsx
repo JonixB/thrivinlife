@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface Props {
-  currentImage: string;
+  currentImage: string | null;
   onImageUpload: (file: File) => void;
 }
 
