@@ -20,10 +20,16 @@ const BudgetingComps = () => {
         selectedYear={selectedYear}
         setSelectedYear={setSelectedYear}
       />
-      <IncomesList selectedMonth={selectedMonth} />
-      <ExpensesList selectedMonth={selectedMonth} />
+      <IncomesList
+        selectedMonth={selectedMonth}
+        selectedYear={selectedYear}
+      />
+      <ExpensesList
+        selectedMonth={selectedMonth}
+        selectedYear={selectedYear}
+      />
     </div>
-  );
+  )
 };
 
 
