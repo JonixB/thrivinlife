@@ -13,9 +13,10 @@ interface ProfileInfo {
 
 interface Props {
   user: User;
+  updateAvatarUrl: () => Promise<void>;
 }
 
-const ProfilePage: React.FC<Props> = ({ user }) => {
+const ProfilePage: React.FC<Props> = ({ user, updateAvatarUrl }) => {
   const [profile, setProfile] = useState<ProfileInfo>({
     firstName: '',
     lastName: '',
@@ -69,6 +70,7 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
         console.error(error);
       } else {
         toast.success('Profile image updated successfully');
+        await updateAvatarUrl();
       }
 
     } else {
