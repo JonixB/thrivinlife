@@ -16,7 +16,7 @@ interface Expense {
   notes: string;
 }
 
-const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => {
+const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = ({ selectedMonth, selectedYear }) => {
   const [isExpenseFormOpen, setExpenseFormOpen] = useState(false);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const { userId } = useTaskContext();
@@ -60,11 +60,10 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      // Define the start and end dates for the month
-      const startDate = new Date(selectedMonth);
-      const endDate = new Date(selectedMonth);
-      endDate.setMonth(endDate.getMonth() + 1);
-      endDate.setDate(0);
+      const year = parseInt(selectedYear);
+      const month = parseInt(selectedMonth) - 1;
+      const startDate = new Date(year, month, 1);
+      const endDate = new Date(year, month + 1, 0);
 
       const { data, error } = await supabase
         .from('expenses')
@@ -83,7 +82,7 @@ const ExpensesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) =>
     if (userId) {
       fetchExpenses();
     }
-  }, [selectedMonth, userId]);
+  }, [selectedMonth, selectedYear, userId]);
 
   const handleExpenseFormSubmit = async (expense: Expense) => {
     // Check if editing an existing income

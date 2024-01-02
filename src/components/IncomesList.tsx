@@ -14,7 +14,7 @@ interface Income {
   notes: string;
 }
 
-const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => {
+const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = ({ selectedMonth, selectedYear }) => {
   const [isIncomeFormOpen, setIncomeFormOpen] = useState(false);
   const [incomes, setIncomes] = useState<Income[]>([]);
   const { userId } = useTaskContext();
@@ -58,11 +58,11 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
 
   useEffect(() => {
     const fetchIncomes = async () => {
-      // Define the start and end dates for the month
-      const startDate = new Date(selectedMonth);
-      const endDate = new Date(selectedMonth);
-      endDate.setMonth(endDate.getMonth() + 1);
-      endDate.setDate(0);
+      const year = parseInt(selectedYear);
+      const month = parseInt(selectedMonth) - 1;
+
+      const startDate = new Date(year, month, 1);
+      const endDate = new Date(year, month + 1, 0);
 
       const { data, error } = await supabase
         .from('incomes')
@@ -81,7 +81,7 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
     if (userId) {
       fetchIncomes();
     }
-  }, [selectedMonth, userId]);
+  }, [selectedMonth, selectedYear, userId]);
 
   const handleIncomeFormSubmit = async (income: Income) => {
     // Check if editing an existing income
@@ -107,11 +107,11 @@ const IncomesList: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => 
       }
     } else {
       try {
-        const { data, error } = await supabase.from('incomes').insert([{ 
+        const { data, error } = await supabase.from('incomes').insert([{
           ...income,
           user_id: userId // Include the user_id
         }]);
-        
+
         setIncomes([...incomes, income]);
         toast.success('Income added successfully.');
       } catch (error) {
