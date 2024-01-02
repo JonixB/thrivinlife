@@ -49,6 +49,12 @@ function App() {
     }
   };
 
+  const updateAvatarUrl = async () => {
+    if (user && user.user) {
+      await fetchUserProfile(user.user.id);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -86,7 +92,7 @@ function App() {
             {user ? (
               <>
                 {isProfileComplete ? (
-                  <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${avatarUrl}` : null} firstName={firstName} />} />
+                  <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${avatarUrl}` : null} firstName={firstName} updateAvatarUrl={updateAvatarUrl} />}/>
                 ) : (
                   <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} />} />
                 )}
