@@ -13,6 +13,7 @@ interface MainContentProps {
   user: Session | null;
   avatarUrl: string | null;
   firstName: string | null;
+  updateAvatarUrl: () => Promise<void>;
 }
 
 const MainContent: React.FC<MainContentProps> = ({ user, avatarUrl, firstName }) => {
