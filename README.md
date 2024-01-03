@@ -4,3 +4,12 @@ ThrivinLife is a personal project of mine. The aim is for this to be your all-in
 
 ## Tech Stack
 The project is built with React, Tailwind CSS, TypeScript, and Supabase as its backend. 
+
+## Features
+
+- **Tasks Page**: Users have this page to add, and manage their daily tasks
+
+- **Budgeting Page**: A page that manages lists your income, expenses as well are your current balance. An easy way to keep track of your budget.
+  
+- **Profile Page**: Users would be able to edit their own profile information as well as upload an avatar they would like to be displayed.
+
