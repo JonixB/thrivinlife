@@ -46,6 +46,7 @@ const Login: React.FC = () => {
     }
     if (data) {
       // Directly navigate to home, App.tsx will handle redirection if the profile is incomplete
+      toast.success('Login Successful');
       navigate('/');
     }
   };
