@@ -11,6 +11,11 @@ const getCurrentMonth = () => {
 const BudgetingComps = () => {
   const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+  const [triggerUpdate, setTriggerUpdate] = useState(0);
+
+  const triggerDataFetch = () => {
+    setTriggerUpdate(triggerUpdate + 1);
+  };
 
   return (
     <div>
@@ -23,10 +28,14 @@ const BudgetingComps = () => {
       <IncomesList
         selectedMonth={selectedMonth}
         selectedYear={selectedYear}
+        triggerUpdate={triggerUpdate}
+        onDataAdded={triggerDataFetch}
       />
       <ExpensesList
         selectedMonth={selectedMonth}
         selectedYear={selectedYear}
+        triggerUpdate={triggerUpdate}
+        onDataAdded={triggerDataFetch}
       />
     </div>
   )
