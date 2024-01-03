@@ -19,3 +19,6 @@ The project is built with React, Tailwind CSS, TypeScript, and Supabase as its b
 
 ### Login Page
 ![](https://github.com/JonixB/thrivinlife/blob/main/public/Login.gif)
+
+### Daily Tasks Page
+![](https://github.com/JonixB/thrivinlife/blob/main/public/Daily%20Tasks.gif)
