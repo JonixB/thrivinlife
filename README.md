@@ -13,3 +13,9 @@ The project is built with React, Tailwind CSS, TypeScript, and Supabase as its b
   
 - **Profile Page**: Users would be able to edit their own profile information as well as upload an avatar they would like to be displayed.
 
+- **Fitness**: To be built but the goal is for this page to set your fitness goals. 
+
+## Demo
+
+### Login Page
+![](https://github.com/JonixB/thrivinlife/blob/main/public/Login.gif)
