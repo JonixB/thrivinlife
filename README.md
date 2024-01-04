@@ -25,3 +25,6 @@ The project is built with React, Tailwind CSS, TypeScript, and Supabase as its b
 
 ### Budgeting Page
 ![](https://github.com/JonixB/thrivinlife/blob/main/public/Budgeting.gif)
+
+### Profile Page
+![](https://github.com/JonixB/thrivinlife/blob/main/public/Profile-Logout.gif)
