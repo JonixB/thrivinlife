@@ -5,7 +5,7 @@ ThrivinLife is a personal project of mine. The aim is for this to be your all-in
 ## Tech Stack
 The project is built with React, Tailwind CSS, TypeScript, and Supabase as its backend. 
 
-## Vercel Deploymen
+## Vercel Deployment
 The app's MVP is also deployed at [https://thrivinlife-1.vercel.app/login](https://thrivinlife-1.vercel.app/login)
 Note that I am only using a free supabase account so there is a limit of emails that can be sent per hour so if you did not receive an email, that can be the reason.
 
