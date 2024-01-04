@@ -24,6 +24,7 @@ const BudgetingComps = () => {
         setSelectedMonth={setSelectedMonth}
         selectedYear={selectedYear}
         setSelectedYear={setSelectedYear}
+        triggerUpdate={triggerUpdate}
       />
       <IncomesList
         selectedMonth={selectedMonth}
