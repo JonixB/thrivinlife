@@ -7,7 +7,8 @@ const BudgetSummary: React.FC<{
   setSelectedMonth: React.Dispatch<React.SetStateAction<string>>;
   selectedYear: string;
   setSelectedYear: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ selectedMonth, setSelectedMonth, selectedYear, setSelectedYear }) => {
+  triggerUpdate: number;
+}> = ({ selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, triggerUpdate }) => {
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
@@ -34,7 +35,7 @@ const BudgetSummary: React.FC<{
         setTotalIncome(totalIncome);
         setTotalExpenses(totalExpenses);
       });
-  }, [selectedMonth, selectedYear, userId]);
+  }, [selectedMonth, selectedYear, userId, triggerUpdate]);
 
   const balance = totalIncome - totalExpenses;
 
