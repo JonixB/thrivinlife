@@ -63,7 +63,7 @@ const Login: React.FC = () => {
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </h2>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="username">Username</label>
+            <label className="block text-sm font-medium mb-2" htmlFor="username">Email</label>
             <input
               id="username"
               type="text"
