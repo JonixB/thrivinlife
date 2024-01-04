@@ -16,7 +16,15 @@ interface Expense {
   notes: string;
 }
 
-const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = ({ selectedMonth, selectedYear }) => {
+interface ExpensesListProps {
+  selectedMonth: string;
+  selectedYear: string;
+  triggerUpdate: number;
+  onDataAdded: () => void;
+}
+
+
+const ExpensesList: React.FC<ExpensesListProps> = ({ selectedMonth, selectedYear, triggerUpdate, onDataAdded }) => {
   const [isExpenseFormOpen, setExpenseFormOpen] = useState(false);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const { userId } = useTaskContext();
@@ -49,6 +57,7 @@ const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = 
       if (error) throw error;
 
       setExpenses(expenses.filter(item => item.id !== expenseToDelete.id));
+      onDataAdded();
       toast.success('Expense deleted successfully.');
     } catch (error) {
       console.error('Error deleting expense:', error);
@@ -82,7 +91,7 @@ const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = 
     if (userId) {
       fetchExpenses();
     }
-  }, [selectedMonth, selectedYear, userId]);
+  }, [selectedMonth, selectedYear, userId, triggerUpdate]);
 
   const handleExpenseFormSubmit = async (expense: Expense) => {
     // Check if editing an existing income
@@ -103,6 +112,7 @@ const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = 
         if (error) throw error;
 
         setExpenses(expenses.map(item => item.id === editingExpense.id ? expense : item));
+        onDataAdded();
         toast.success('Expense updated successfully.');
       } catch (error) {
         console.error('Error updating expense:', error);
@@ -117,6 +127,7 @@ const ExpensesList: React.FC<{ selectedMonth: string; selectedYear: string }> = 
         console.log(expense)
 
         setExpenses([...expenses, expense]);
+        onDataAdded();
         toast.success('Expense added successfully.');
       } catch (error) {
         console.error('Error adding expense:', error);
