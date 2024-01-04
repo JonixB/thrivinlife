@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 interface ProfileSetupProps {
   user: User | null;
+  setIsProfileComplete: (isComplete: boolean) => void;
+  fetchUserProfile: (userId: string) => Promise<void>;
 }
 
 interface ProfileInfo {
@@ -14,7 +16,7 @@ interface ProfileInfo {
   date_of_birth: string;
 }
 
-const ProfileSetup: React.FC<ProfileSetupProps & { setIsProfileComplete: (isComplete: boolean) => void }> = ({ user, setIsProfileComplete }) => {
+const ProfileSetup: React.FC<ProfileSetupProps> = ({ user, setIsProfileComplete, fetchUserProfile }) => {
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     first_name: '',
     last_name: '',
@@ -43,6 +45,7 @@ const ProfileSetup: React.FC<ProfileSetupProps & { setIsProfileComplete: (isComp
     } else {
       toast.success('Profile updated successfully');
       setIsProfileComplete(true);
+      fetchUserProfile(user.id);
       navigate('/');
     }
   };
