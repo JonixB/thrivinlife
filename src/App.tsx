@@ -94,7 +94,7 @@ function App() {
                 {isProfileComplete ? (
                   <Route path="/*" element={<MainContent user={user} avatarUrl={avatarUrl ? `${process.env.REACT_APP_THRIVIN_LIFE_SUPABASE_URL!}/storage/v1/object/public/avatars/${avatarUrl}` : null} firstName={firstName} updateAvatarUrl={updateAvatarUrl} />}/>
                 ) : (
-                  <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} />} />
+                  <Route path="/profile-setup" element={<ProfileSetup user={user.user} setIsProfileComplete={setIsProfileComplete} fetchUserProfile={fetchUserProfile} />} />
                 )}
                 <Route path="*" element={<Navigate to={isProfileComplete ? "/" : "/profile-setup"} />} />
               </>
