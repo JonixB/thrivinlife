@@ -14,7 +14,15 @@ interface Income {
   notes: string;
 }
 
-const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = ({ selectedMonth, selectedYear }) => {
+interface IncomesListProps {
+  selectedMonth: string;
+  selectedYear: string;
+  triggerUpdate: number;
+  onDataAdded: () => void;
+}
+
+
+const IncomesList: React.FC<IncomesListProps> = ({ selectedMonth, selectedYear, triggerUpdate, onDataAdded }) => {
   const [isIncomeFormOpen, setIncomeFormOpen] = useState(false);
   const [incomes, setIncomes] = useState<Income[]>([]);
   const { userId } = useTaskContext();
@@ -47,6 +55,7 @@ const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = (
       if (error) throw error;
 
       setIncomes(incomes.filter(item => item.id !== incomeToDelete.id));
+      onDataAdded();
       toast.success('Income deleted successfully.');
     } catch (error) {
       console.error('Error deleting income:', error);
@@ -81,7 +90,7 @@ const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = (
     if (userId) {
       fetchIncomes();
     }
-  }, [selectedMonth, selectedYear, userId]);
+  }, [selectedMonth, selectedYear, userId, triggerUpdate]);
 
   const handleIncomeFormSubmit = async (income: Income) => {
     // Check if editing an existing income
@@ -100,6 +109,7 @@ const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = (
         if (error) throw error;
 
         setIncomes(incomes.map(item => item.id === editingIncome.id ? income : item));
+        onDataAdded();
         toast.success('Income updated successfully.');
       } catch (error) {
         console.error('Error updating income:', error);
@@ -113,6 +123,7 @@ const IncomesList: React.FC<{ selectedMonth: string; selectedYear: string }> = (
         }]);
 
         setIncomes([...incomes, income]);
+        onDataAdded();
         toast.success('Income added successfully.');
       } catch (error) {
         console.error('Error adding income:', error);
